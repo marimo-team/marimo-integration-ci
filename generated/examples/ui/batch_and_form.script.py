@@ -5,6 +5,9 @@ __generated_with = "0.9.30"
 import marimo as mo
 
 # %%
+mo.md("""# Batch and Form""")
+
+# %%
 mo.md(
     """
     Make custom UI elements using `batch()`, and turn any UI element
@@ -14,14 +17,6 @@ mo.md(
 
 # %%
 reset = mo.ui.button(label="reset history")
-
-# %%
-mo.md("""# Batch and Form""")
-
-# %%
-reset
-
-submitted_values = {"x": set(), "y": set()}
 
 # %%
 reset
@@ -44,6 +39,11 @@ variables = (
 )
 
 variables
+
+# %%
+reset
+
+submitted_values = {"x": set(), "y": set()}
 
 # %%
 if variables.value is not None:

@@ -5,6 +5,17 @@ __generated_with = "0.9.30"
 import marimo as mo
 
 # %%
+graph = mo.ui.code_editor(
+    value="""sequenceDiagram
+    Alice->>John: Hello John, how are you?
+    John-->>Alice: Great!
+    Alice-)John: See you later!""",
+    language="mermaid",
+    label="Mermaid editor",
+)
+graph
+
+# %%
 mo.mermaid(
     """
 graph TD
@@ -17,17 +28,6 @@ graph TD
     F --> B
 """
 ).center()
-
-# %%
-graph = mo.ui.code_editor(
-    value="""sequenceDiagram
-    Alice->>John: Hello John, how are you?
-    John-->>Alice: Great!
-    Alice-)John: See you later!""",
-    language="mermaid",
-    label="Mermaid editor",
-)
-graph
 
 # %%
 mo.md(

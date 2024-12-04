@@ -28,10 +28,6 @@ mo.md(
 uploaded_file = mo.ui.file(filetypes=[".csv"], kind="area")
 
 # %%
-mo.stop(not uploaded_file.name())
-df = pd.read_csv(io.StringIO(uploaded_file.contents().decode()))
-
-# %%
 mo.md(
     f"""
     {mo.hstack([mo.md("**Upload a CSV.**")], justify="center")}
@@ -41,7 +37,8 @@ mo.md(
 )
 
 # %%
-mo.ui.table(df, page_size=5, selection=None)
+mo.stop(not uploaded_file.name())
+df = pd.read_csv(io.StringIO(uploaded_file.contents().decode()))
 
 # %%
 plot_type = mo.ui.dropdown(
@@ -53,9 +50,7 @@ y_column = mo.ui.dropdown(df.columns, label="Choose y-axis: ")
 color_column = mo.ui.dropdown(df.columns, label="Choose color-axis: ")
 
 # %%
-mo.hstack(
-    [x_column, y_column, color_column, plot_type], justify="space-around"
-).callout(kind="warn" if not x_column.value else "neutral")
+mo.ui.table(df, page_size=5, selection=None)
 
 # %%
 mo.stop(not x_column.value)
@@ -75,3 +70,8 @@ def plot(x_column, y_column, color_column):
 
 
 plot(x_column.value, y_column.value, color_column.value)
+
+# %%
+mo.hstack(
+    [x_column, y_column, color_column, plot_type], justify="space-around"
+).callout(kind="warn" if not x_column.value else "neutral")

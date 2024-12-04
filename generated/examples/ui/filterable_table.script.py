@@ -10,11 +10,11 @@ import marimo as mo
 import pandas as pd
 
 # %%
-# Read the csv
-df = pd.read_json(data_url("cars.json"))
+mo.md(r"""# Filterable DataFrame""")
 
 # %%
-mo.md(r"""# Filterable DataFrame""")
+# Read the csv
+df = pd.read_json(data_url("cars.json"))
 
 # %%
 # Create options for select widgets

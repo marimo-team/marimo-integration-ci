@@ -5,12 +5,6 @@ __generated_with = "0.9.30"
 import marimo as mo
 
 # %%
-mo.md("""# Tabs""")
-
-# %%
-mo.md("""Use `mo.ui.tabs` to organize outputs.""")
-
-# %%
 settings = mo.vstack(
     [
         mo.md("Edit User"),
@@ -35,6 +29,12 @@ mo.ui.tabs(
         "🏢 Organization": organization,
     }
 )
+
+# %%
+mo.md("""# Tabs""")
+
+# %%
+mo.md("""Use `mo.ui.tabs` to organize outputs.""")
 
 # %%
 mo.md(

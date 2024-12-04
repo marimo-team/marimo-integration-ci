@@ -6,6 +6,21 @@ import marimo as mo
 import random
 
 # %%
+mo.md("""... and their values""")
+
+# %%
+mo.md(
+    r"""
+    Key difference between marimo dict and standard python dict:
+
+    The main reason to use `mo.ui.dictionary` is for reactive execution — when you interact with an element in a `mo.ui.dictionary`, all cells that reference the `mo.ui.dictionary` run automatically, just like all other ui elements. When you use a regular dictionary, you don't get this reactivity.
+    """
+)
+
+# %%
+mo.md(r"""Notice that when you interact with the UI elements in the marimo dict, the reference of marimo dict updates automatically. However, when you interact with the elements in the python dict, you need to manually re-run the cell to see the updated values.""")
+
+# %%
 mo.md(
     """
     Use `mo.ui.array` and `mo.ui.dictionary` to create UI elements that wrap 
@@ -18,31 +33,29 @@ mo.md(
 )
 
 # %%
-mo.md(
-    r"""
-    Key difference between marimo dict and standard python dict:
-
-    The main reason to use `mo.ui.dictionary` is for reactive execution — when you interact with an element in a `mo.ui.dictionary`, all cells that reference the `mo.ui.dictionary` run automatically, just like all other ui elements. When you use a regular dictionary, you don't get this reactivity.
-    """
-)
-
-# %%
-create = mo.ui.button(label="Create new collections")
-
-# %%
 mo.md("""UI Elements ...""")
-
-# %%
-mo.md(r"""Notice that when you interact with the UI elements in the marimo dict, the reference of marimo dict updates automatically. However, when you interact with the elements in the python dict, you need to manually re-run the cell to see the updated values.""")
-
-# %%
-mo.md("""... and their values""")
 
 # %%
 mo.md("""# Arrays and Dictionaries""")
 
 # %%
+create = mo.ui.button(label="Create new collections")
+
+# %%
 create.center()
+
+# %%
+create
+
+array = mo.ui.array(
+    [mo.ui.text()]
+    + [mo.ui.slider(1, 10) for _ in range(0, random.randint(2, 5))],
+)
+dictionary = mo.ui.dictionary(
+    {str(i): mo.ui.slider(1, 10) for i in range(0, random.randint(2, 5))}
+)
+
+mo.hstack([array, dictionary], justify="space-around")
 
 # %%
 create
@@ -75,17 +88,7 @@ mo.hstack(
 )
 
 # %%
-create
-
-array = mo.ui.array(
-    [mo.ui.text()]
-    + [mo.ui.slider(1, 10) for _ in range(0, random.randint(2, 5))],
-)
-dictionary = mo.ui.dictionary(
-    {str(i): mo.ui.slider(1, 10) for i in range(0, random.randint(2, 5))}
-)
-
-mo.hstack([array, dictionary], justify="space-around")
+mo.hstack([array.value, dictionary.value], justify="space-around")
 
 # %%
 mo_d_ref = {k: mo_d[k].value for k in mo_d.value.keys()}
@@ -97,6 +100,3 @@ mo.hstack(
     ],
     justify="space-around",
 )
-
-# %%
-mo.hstack([array.value, dictionary.value], justify="space-around")
