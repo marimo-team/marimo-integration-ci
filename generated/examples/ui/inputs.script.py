@@ -5,29 +5,57 @@ __generated_with = "0.9.30"
 import marimo as mo
 
 # %%
+mo.md(
+    r"""
+    # Inputs
+
+    There are many way that a user can input with your notebook, such as text boxes, sliders, dates, and more.
+    """
+)
+
+# %%
+mo.md(r"""## Text boxes""")
+
+# %%
+mo.hstack(
+    [
+        username := mo.ui.text(label="Username"),
+        email := mo.ui.text(label="Email", kind="email"),
+        mo.ui.text(label="Password", kind="password"),
+    ]
+)
+
+# %%
+mo.stop(not username.value, mo.md("What is your name?"))
+
+mo.md(f"👋 Hello {username.value}, nice to meet you!")
+
+# %%
 mo.ui.text_area(
     label="A space for your thoughts", full_width=True, max_length=1000
 )
 
 # %%
+mo.ui.number(label="What is your favorite number?", start=0, stop=10)
+
+# %%
 mo.md(r"""## Sliders""")
 
 # %%
-import datetime
-
-start_date = mo.ui.date(
-    label="Start date",
-    start=datetime.date(2020, 1, 1),
-    stop=datetime.date(2020, 12, 31),
+slider = mo.ui.slider(0, 100, value=50, label="Basic slider", show_value=True)
+range_slider = mo.ui.range_slider(
+    0, 100, value=(30, 70), label="Range slider", show_value=True
 )
-end_date = mo.ui.date(
-    label="End date",
-    start=datetime.date(2020, 1, 1),
-    stop=datetime.date(2020, 12, 31),
+custom_steps = mo.ui.slider(
+    steps=[1, 10, 100, 1000], value=10, label="Custom steps", show_value=True
 )
+vertical = mo.ui.slider(
+    0, 100, value=50, label="Vertical slider", orientation="vertical"
+)
+mo.vstack([slider, range_slider, custom_steps, vertical]).center()
 
 # %%
-mo.ui.number(label="What is your favorite number?", start=0, stop=10)
+mo.md(r"""## Checkboxes and Radios""")
 
 # %%
 COLORS = ["red", "green", "blue"]
@@ -49,69 +77,6 @@ Let's build something:
 
 {colors.hstack().left()}
 """).center()
-
-# %%
-mo.md(
-    r"""
-    # Inputs
-
-    There are many way that a user can input with your notebook, such as text boxes, sliders, dates, and more.
-    """
-)
-
-# %%
-mo.md("""## Dropdowns""")
-
-# %%
-mo.md(r"""## Text boxes""")
-
-# %%
-mo.hstack(
-    [
-        username := mo.ui.text(label="Username"),
-        email := mo.ui.text(label="Email", kind="email"),
-        mo.ui.text(label="Password", kind="password"),
-    ]
-)
-
-# %%
-single = mo.ui.dropdown(
-    ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"],
-    label="Single select",
-)
-multi = mo.ui.multiselect(
-    ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"],
-    label="Multi select",
-    value=["Option 1", "Option 2"],
-)
-mo.hstack([single, multi])
-
-# %%
-mo.md("""## Dates""")
-
-# %%
-slider = mo.ui.slider(0, 100, value=50, label="Basic slider", show_value=True)
-range_slider = mo.ui.range_slider(
-    0, 100, value=(30, 70), label="Range slider", show_value=True
-)
-custom_steps = mo.ui.slider(
-    steps=[1, 10, 100, 1000], value=10, label="Custom steps", show_value=True
-)
-vertical = mo.ui.slider(
-    0, 100, value=50, label="Vertical slider", orientation="vertical"
-)
-mo.vstack([slider, range_slider, custom_steps, vertical]).center()
-
-# %%
-mo.md(r"""## Checkboxes and Radios""")
-
-# %%
-mo.hstack(
-    [
-        mo.hstack([start_date, "➡️", end_date]).left(),
-        mo.md(f"From {start_date.value} to {end_date.value}"),
-    ]
-)
 
 # %%
 selected_colors = [color for i, color in enumerate(COLORS) if colors.value[i]]
@@ -152,6 +117,41 @@ A {"/".join(selected_colors)} {shape.value}:
 """).center()
 
 # %%
-mo.stop(not username.value, mo.md("What is your name?"))
+mo.md("""## Dates""")
 
-mo.md(f"👋 Hello {username.value}, nice to meet you!")
+# %%
+import datetime
+
+start_date = mo.ui.date(
+    label="Start date",
+    start=datetime.date(2020, 1, 1),
+    stop=datetime.date(2020, 12, 31),
+)
+end_date = mo.ui.date(
+    label="End date",
+    start=datetime.date(2020, 1, 1),
+    stop=datetime.date(2020, 12, 31),
+)
+
+# %%
+mo.hstack(
+    [
+        mo.hstack([start_date, "➡️", end_date]).left(),
+        mo.md(f"From {start_date.value} to {end_date.value}"),
+    ]
+)
+
+# %%
+mo.md("""## Dropdowns""")
+
+# %%
+single = mo.ui.dropdown(
+    ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"],
+    label="Single select",
+)
+multi = mo.ui.multiselect(
+    ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"],
+    label="Multi select",
+    value=["Option 1", "Option 2"],
+)
+mo.hstack([single, multi])

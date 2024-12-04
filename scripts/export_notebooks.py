@@ -131,7 +131,7 @@ def main():
         notebook_path = os.path.join(args.examples_dir, notebook)
         if os.path.exists(notebook_path):
             export_markdown(notebook_path)
-            # export_html(notebook_path)
+            export_html(notebook_path)
             export_ipynb(notebook_path)
             export_script(notebook_path)
         else:

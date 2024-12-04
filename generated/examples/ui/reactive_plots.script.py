@@ -6,9 +6,6 @@ import altair as alt
 from vega_datasets import data
 
 # %%
-import marimo as mo
-
-# %%
 cars = data.cars()
 brush = alt.selection_interval()
 scatter = (
@@ -27,6 +24,9 @@ bars = (
     .encode(y="Origin:N", color="Origin:N", x="count(Origin):Q")
     .transform_filter(brush)
 )
+
+# %%
+import marimo as mo
 
 # %%
 mo.md("""# Welcome to marimo!""")

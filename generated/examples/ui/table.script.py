@@ -5,6 +5,28 @@ __generated_with = "0.9.30"
 import marimo as mo
 
 # %%
+mo.md(
+    """
+    # Tables
+
+    > “Sometimes I’ll start a sentence and I don’t even know where it’s going. I just hope I find it along the way.”
+    — Michael Scott
+    """
+)
+
+# %%
+mo.md("""_Create rich tables with selectable rows using_ `mo.ui.table`.""")
+
+# %%
+mo.md("""**Single selection.**""")
+
+# %%
+mo.md("""**Multi-selection.**""")
+
+# %%
+mo.md("""**No selection.**""")
+
+# %%
 office_characters = [
     {
         "first_name": "Michael",
@@ -129,26 +151,14 @@ office_characters = [
 ]
 
 # %%
-mo.md("""_Create rich tables with selectable rows using_ `mo.ui.table`.""")
-
-# %%
-mo.md("""**No selection.**""")
-
-# %%
-mo.md(
-    """
-    # Tables
-
-    > “Sometimes I’ll start a sentence and I don’t even know where it’s going. I just hope I find it along the way.”
-    — Michael Scott
-    """
+single_select_table = mo.ui.table(
+    office_characters,
+    selection="single",
+    pagination=True,
 )
 
 # %%
-mo.md("""**Single selection.**""")
-
-# %%
-mo.md("""**Multi-selection.**""")
+mo.ui.tabs({"table": single_select_table, "selection": single_select_table.value})
 
 # %%
 multi_select_table = mo.ui.table(
@@ -158,11 +168,7 @@ multi_select_table = mo.ui.table(
 )
 
 # %%
-single_select_table = mo.ui.table(
-    office_characters,
-    selection="single",
-    pagination=True,
-)
+mo.ui.tabs({"table": multi_select_table, "selection": multi_select_table.value})
 
 # %%
 table = mo.ui.table(
@@ -172,9 +178,3 @@ table = mo.ui.table(
 )
 
 table
-
-# %%
-mo.ui.tabs({"table": multi_select_table, "selection": multi_select_table.value})
-
-# %%
-mo.ui.tabs({"table": single_select_table, "selection": single_select_table.value})
