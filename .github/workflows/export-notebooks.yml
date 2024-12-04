@@ -5,9 +5,12 @@ on:
   repository_dispatch:
     types: [marimo-release]
 
-  # Trigger on push to main
+  # Trigger on push to main, but ignore if in generated files
   push:
     branches: [main]
+    paths-ignore:
+      - 'generated/**'
+      - 'public/**'
 
   # Trigger nightly
   schedule:
@@ -17,7 +20,10 @@ on:
   workflow_dispatch: {}
 
 permissions:
+  pull-requests: write
   contents: write
+  pages: write
+  id-token: write
 
 env:
   UV_SYSTEM_PYTHON: 1
@@ -40,6 +46,7 @@ jobs:
       - name: 📦 Install marimo
         run: |
           uv pip install marimo
+          uv pip install nbformat polars altair vega_datasets matplotlib pandas
 
       - name: 📂 Clone marimo examples
         run: |
@@ -71,4 +78,31 @@ jobs:
             automated
           assignees: |
             mscolnick
-          add-paths: 'generated/*'
+          add-paths: |
+            generated/*
+            public/*
+
+  deploy:
+    needs: export-notebooks
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: 📥 Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+
+      - name: 📦 Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: 🚀 Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - name: 🌐 Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
