@@ -12,6 +12,10 @@ from vega_datasets import data
 pd.options.display.max_rows = 30
 
 # %%
+refresh_interval_slider = mo.ui.slider(start=5, stop=60, step=1, value=10, label="refresh interval (default = 10 sec)")
+n_points_slider = mo.ui.slider(start=5, stop=30, step=1, value=15, label="number of points (default = 15)")
+
+# %%
 # load geo data from Vega Datasets
 countries = alt.topo_feature(data.world_110m.url, 'countries')
 
@@ -24,10 +28,6 @@ sphere = alt.Chart(alt.sphere()).mark_geoshape(
 world = alt.Chart(countries).mark_geoshape(
     fill="mintcream", stroke="black", strokeWidth=0.35
 )
-
-# %%
-refresh_interval_slider = mo.ui.slider(start=5, stop=60, step=1, value=10, label="refresh interval (default = 10 sec)")
-n_points_slider = mo.ui.slider(start=5, stop=30, step=1, value=15, label="number of points (default = 15)")
 
 # %%
 refresher = mo.ui.refresh(default_interval=f"{refresh_interval_slider.value}s")

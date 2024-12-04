@@ -5,10 +5,7 @@ __generated_with = "0.9.30"
 import marimo as mo
 
 # %%
-mo.md("""# Stacks""")
-
-# %%
-mo.md("""Use `mo.hstack` and `mo.vstack` to layout outputs in rows and columns.""")
+mo.md("""## Vertical Stack: `vstack`""")
 
 # %%
 align = mo.ui.dropdown(
@@ -33,10 +30,13 @@ mo.md(
 )
 
 # %%
-mo.md("""## Horizontal Stack: `hstack`""")
+mo.md("""Use `mo.hstack` and `mo.vstack` to layout outputs in rows and columns.""")
 
 # %%
-mo.md("""## Vertical Stack: `vstack`""")
+mo.md("""# Stacks""")
+
+# %%
+mo.md("""## Horizontal Stack: `hstack`""")
 
 # %%
 def create_box(num):
@@ -49,17 +49,17 @@ def create_box(num):
 boxes = [create_box(i) for i in range(1, 5)]
 
 # %%
+mo.vstack(
+    boxes,
+    align=align.value,
+    gap=gap.value,
+)
+
+# %%
 mo.hstack(
     boxes,
     align=align.value,
     justify=justify.value,
     gap=gap.value,
     wrap=wrap.value,
-)
-
-# %%
-mo.vstack(
-    boxes,
-    align=align.value,
-    gap=gap.value,
 )
