@@ -129,10 +129,10 @@ office_characters = [
 ]
 
 # %%
-mo.md("""**Multi-selection.**""")
+mo.md("""_Create rich tables with selectable rows using_ `mo.ui.table`.""")
 
 # %%
-mo.md("""_Create rich tables with selectable rows using_ `mo.ui.table`.""")
+mo.md("""**No selection.**""")
 
 # %%
 mo.md(
@@ -148,7 +148,14 @@ mo.md(
 mo.md("""**Single selection.**""")
 
 # %%
-mo.md("""**No selection.**""")
+mo.md("""**Multi-selection.**""")
+
+# %%
+multi_select_table = mo.ui.table(
+    office_characters,
+    selection="multi",
+    pagination=True,
+)
 
 # %%
 single_select_table = mo.ui.table(
@@ -167,14 +174,7 @@ table = mo.ui.table(
 table
 
 # %%
-multi_select_table = mo.ui.table(
-    office_characters,
-    selection="multi",
-    pagination=True,
-)
+mo.ui.tabs({"table": multi_select_table, "selection": multi_select_table.value})
 
 # %%
 mo.ui.tabs({"table": single_select_table, "selection": single_select_table.value})
-
-# %%
-mo.ui.tabs({"table": multi_select_table, "selection": multi_select_table.value})
