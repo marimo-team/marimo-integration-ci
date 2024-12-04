@@ -1,0 +1,74 @@
+name: Export Notebooks
+
+on:
+  # Trigger on new releases from marimo-team/marimo
+  repository_dispatch:
+    types: [marimo-release]
+
+  # Trigger on push to main
+  push:
+    branches: [main]
+
+  # Trigger nightly
+  schedule:
+    - cron: '0 0 * * *' # Run at midnight UTC
+
+  # Allow manual trigger
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+env:
+  UV_SYSTEM_PYTHON: 1
+
+jobs:
+  export-notebooks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🚀 Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - name: 📦 Install marimo
+        run: |
+          uv pip install marimo
+
+      - name: 📂 Clone marimo examples
+        run: |
+          git clone --depth 1 --filter=blob:none --sparse https://github.com/marimo-team/marimo.git
+          cd marimo
+          git sparse-checkout set examples
+          cd ..
+          mv marimo/examples .
+          rm -rf marimo
+
+      - name: 🛠️ Run export script
+        run: |
+          uv run scripts/export_notebooks.py
+
+      - name: 📄 List changed files
+        continue-on-error: true
+        run: |
+          echo "Changed files:"
+          git diff --name-only HEAD^ HEAD
+
+      - name: 🔄 Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: 'Update exported notebooks'
+          branch: update-exported-notebooks
+          title: 'Update exported notebooks'
+          body: 'This PR updates the exported notebooks.'
+          labels: |
+            automated
+          assignees: |
+            mscolnick
+          add-paths: 'generated/*'
