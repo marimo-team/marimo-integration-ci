@@ -1,6 +1,6 @@
 ---
 title: Filterable Table
-marimo-version: 0.9.29
+marimo-version: 0.9.30
 width: medium
 ---
 
