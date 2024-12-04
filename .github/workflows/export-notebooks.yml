@@ -19,18 +19,16 @@ on:
   # Allow manual trigger
   workflow_dispatch: {}
 
-permissions:
-  pull-requests: write
-  contents: write
-  pages: write
-  id-token: write
-
 env:
   UV_SYSTEM_PYTHON: 1
 
 jobs:
   export-notebooks:
     runs-on: ubuntu-latest
+
+    permissions:
+      pull-requests: write
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -69,6 +67,11 @@ jobs:
           echo "Changed files:"
           git diff --name-only HEAD^ HEAD
 
+      - name: 📦 Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
       - name: 🔄 Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
@@ -91,20 +94,13 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
+    permissions:
+      pages: write
+      id-token: write
+
     steps:
-      - name: 📥 Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: github-pages
-
-      - name: 📦 Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: 🚀 Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: public
-
       - name: 🌐 Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages
