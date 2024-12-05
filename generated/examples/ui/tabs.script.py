@@ -1,5 +1,5 @@
 
-__generated_with = "0.9.30"
+__generated_with = "0.9.31"
 
 # %%
 import marimo as mo

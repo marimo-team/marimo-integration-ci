@@ -1,6 +1,6 @@
 ---
 title: Reactive Plots
-marimo-version: 0.9.30
+marimo-version: 0.9.31
 width: full
 ---
 
