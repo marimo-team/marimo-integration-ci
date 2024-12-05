@@ -1,6 +1,6 @@
 ---
 title: Tabs
-marimo-version: 0.9.30
+marimo-version: 0.9.31
 ---
 
 # Tabs
