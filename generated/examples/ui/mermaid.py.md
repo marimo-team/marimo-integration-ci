@@ -1,6 +1,6 @@
 ---
 title: Mermaid
-marimo-version: 0.9.31
+marimo-version: 0.9.32
 ---
 
 ```{.python.marimo}

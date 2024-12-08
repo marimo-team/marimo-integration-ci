@@ -1,5 +1,5 @@
 
-__generated_with = "0.9.31"
+__generated_with = "0.9.32"
 
 # %%
 def data_url(file):

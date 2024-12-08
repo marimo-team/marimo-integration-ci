@@ -1,6 +1,6 @@
 ---
 title: Data Explorer
-marimo-version: 0.9.31
+marimo-version: 0.9.32
 width: full
 ---
 
