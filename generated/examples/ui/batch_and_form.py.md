@@ -1,6 +1,6 @@
 ---
 title: Batch And Form
-marimo-version: 0.9.31
+marimo-version: 0.9.33
 ---
 
 # Batch and Form
