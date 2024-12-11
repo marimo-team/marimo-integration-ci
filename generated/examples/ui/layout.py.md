@@ -1,6 +1,6 @@
 ---
 title: Layout
-marimo-version: 0.9.33
+marimo-version: 0.9.34
 ---
 
 # Stacks
