@@ -1,6 +1,6 @@
 ---
 title: Task List
-marimo-version: 0.9.34
+marimo-version: 0.10.5
 ---
 
 ```{.python.marimo hide_code="true"}
