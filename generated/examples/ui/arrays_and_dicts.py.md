@@ -1,6 +1,6 @@
 ---
 title: Arrays And Dicts
-marimo-version: 0.9.34
+marimo-version: 0.10.5
 ---
 
 # Arrays and Dictionaries
