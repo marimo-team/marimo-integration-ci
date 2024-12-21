@@ -54,6 +54,52 @@ def export_html(notebook_path: str) -> None:
         print(result.stderr)
 
 
+def export_html_wasm(notebook_path: str) -> None:
+    """Export a single marimo notebook to HTML format."""
+    output_path = f"{notebook_path}.wasm.run.html"
+    print(f"Exporting {notebook_path} to {output_path}")
+    result = subprocess.run(
+        [
+            "marimo",
+            "export",
+            "html-wasm",
+            notebook_path,
+            "-o",
+            f"public/{output_path}",
+            "--mode",
+            "run",
+            "--no-show-code",
+        ],
+        capture_output=True,
+        text=True,
+    )
+
+    if result.returncode != 0:
+        print(f"Error exporting {notebook_path}:")
+        print(result.stderr)
+
+    output_path = f"{notebook_path}.wasm.edit.html"
+    print(f"Exporting {notebook_path} to {output_path}")
+    result = subprocess.run(
+        [
+            "marimo",
+            "export",
+            "html-wasm",
+            notebook_path,
+            "-o",
+            f"public/{output_path}",
+            "--mode",
+            "edit",
+        ],
+        capture_output=True,
+        text=True,
+    )
+
+    if result.returncode != 0:
+        print(f"Error exporting {notebook_path}:")
+        print(result.stderr)
+
+
 def export_ipynb(notebook_path: str) -> None:
     """Export a single marimo notebook to ipynb format."""
     output_path = f"{notebook_path}.ipynb"
@@ -118,13 +164,19 @@ def generate_index(dir: str) -> None:
         )
         for notebook in WHITELISTED_NOTEBOOKS:
             notebook_name = notebook.split("/")[-1].replace(".py", "")
+            display_name = notebook_name.replace("_", " ").title()
+
+            # Static HTML
             f.write(
-                f'      <a href="{os.path.join(dir, notebook)}.html" class="block p-4 border border-gray-200 rounded hover:border-black">\n'
+                f'      <div class="p-4 border border-gray-200 rounded">\n'
+                f'        <h3 class="text-lg font-semibold mb-2">{display_name}</h3>\n'
+                f'        <div class="flex gap-2">\n'
+                f'          <a href="{os.path.join(dir, notebook)}.html" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded">Static HTML</a>\n'
+                f'          <a href="{os.path.join(dir, notebook)}.wasm.run.html" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded">WASM Run</a>\n'
+                f'          <a href="{os.path.join(dir, notebook)}.wasm.edit.html" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded">WASM Edit</a>\n'
+                f"        </div>\n"
+                f"      </div>\n"
             )
-            f.write(
-                f'        <h3 class="text-lg font-semibold">{notebook_name.replace("_", " ").title()}</h3>\n'
-            )
-            f.write("      </a>\n")
         f.write(
             """    </div>
   </body>
@@ -154,6 +206,7 @@ def main():
         if os.path.exists(notebook_path):
             export_markdown(notebook_path)
             export_html(notebook_path)
+            export_html_wasm(notebook_path)
             export_ipynb(notebook_path)
             export_script(notebook_path)
         else:
