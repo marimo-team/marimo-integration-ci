@@ -1,7 +1,12 @@
 ---
 title: Arrays And Dicts
-marimo-version: 0.9.34
+marimo-version: 0.10.7
 ---
+
+```{.python.marimo}
+import marimo as mo
+import random
+```
 
 # Arrays and Dictionaries
 <!---->
@@ -90,8 +95,3 @@ mo.hstack(
 ```
 
 Notice that when you interact with the UI elements in the marimo dict, the reference of marimo dict updates automatically. However, when you interact with the elements in the python dict, you need to manually re-run the cell to see the updated values.
-
-```{.python.marimo}
-import marimo as mo
-import random
-```

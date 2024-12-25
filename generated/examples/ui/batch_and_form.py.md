@@ -1,7 +1,11 @@
 ---
 title: Batch And Form
-marimo-version: 0.9.34
+marimo-version: 0.10.7
 ---
+
+```{.python.marimo}
+import marimo as mo
+```
 
 # Batch and Form
 <!---->
@@ -60,8 +64,4 @@ submitted_values = {"x": set(), "y": set()}
 
 ```{.python.marimo}
 reset = mo.ui.button(label="reset history")
-```
-
-```{.python.marimo}
-import marimo as mo
 ```
