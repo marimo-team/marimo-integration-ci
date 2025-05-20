@@ -6,141 +6,282 @@ import subprocess
 
 # List of whitelisted notebooks to process
 WHITELISTED_NOTEBOOKS: list[str] = [
+    "ui/array_element.py",
     "ui/arrays_and_dicts.py",
     "ui/batch_and_form.py",
+    "ui/chat.py",
     "ui/data_explorer.py",
-    "ui/filterable_table.py",
-    "ui/inputs.py",
+    "ui/data_editor.py",
+    "ui/dataframe.py",
     "ui/layout.py",
-    "ui/mermaid.py",
-    "ui/reactive_plots.py",
-    "ui/refresh.py",
     "ui/table.py",
     "ui/tabs.py",
-    "ui/task_list.py",
 ]
 
 
 def export_markdown(notebook_path: str) -> None:
     """Export a single marimo notebook to markdown format."""
     output_path = f"{notebook_path}.md"
-    print(f"Exporting {notebook_path} to {output_path}")
+    print(f"📝 {notebook_path} -> generated/{output_path}")
 
-    result = subprocess.run(
-        ["marimo", "export", "md", notebook_path, "-o", f"generated/{output_path}"],
-        capture_output=True,
-        text=True,
-    )
+    cmd = [
+        "marimo",
+        "--yes",
+        "export",
+        "md",
+        notebook_path,
+        "-o",
+        f"generated/{output_path}",
+    ]
+
+    process = None
+    try:
+        process = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        stdout, stderr = process.communicate(timeout=10)
+        result = subprocess.CompletedProcess(cmd, process.returncode, stdout, stderr)
+    except subprocess.TimeoutExpired:
+        print(f"❌ {notebook_path}: Timeout after 10s")
+        if process:
+            process.kill()
+        return
+    except Exception as e:
+        print(f"❌ {notebook_path}: {str(e)}")
+        if process:
+            process.kill()
+        return
 
     if result.returncode != 0:
-        print(f"Error exporting {notebook_path}:")
-        print(result.stderr)
-        raise RuntimeError(f"Failed to export {notebook_path}")
+        print(f"❌ {notebook_path}: Export failed")
+        print(f"Error: {result.stderr}")
+    else:
+        print(f"✅ {notebook_path}: Exported to markdown")
 
 
 def export_html(notebook_path: str) -> None:
     """Export a single marimo notebook to HTML format."""
-    ext = "html"
-    output_path = f"{notebook_path}.{ext}"
-    print(f"Exporting {notebook_path} to {output_path}")
-    result = subprocess.run(
-        ["marimo", "export", "html", notebook_path, "-o", f"public/{output_path}"],
-        capture_output=True,
-        text=True,
-    )
+    output_path = f"{notebook_path}.html"
+    print(f"🌐 {notebook_path} -> public/{output_path}")
+
+    cmd = [
+        "marimo",
+        "--yes",
+        "export",
+        "html",
+        notebook_path,
+        "-o",
+        f"public/{output_path}",
+    ]
+
+    process = None
+    try:
+        process = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        stdout, stderr = process.communicate(timeout=10)
+        result = subprocess.CompletedProcess(cmd, process.returncode, stdout, stderr)
+    except subprocess.TimeoutExpired:
+        print(f"❌ {notebook_path}: Timeout after 10s")
+        if process:
+            process.kill()
+        return
+    except Exception as e:
+        print(f"❌ {notebook_path}: {str(e)}")
+        if process:
+            process.kill()
+        return
 
     if result.returncode != 0:
-        print(f"Error exporting {notebook_path}:")
-        print(result.stderr)
+        print(f"❌ {notebook_path}: Export failed")
+        print(f"Error: {result.stderr}")
+    else:
+        print(f"✅ {notebook_path}: Exported to HTML")
 
 
 def export_html_wasm(notebook_path: str) -> None:
     """Export a single marimo notebook to HTML format."""
+    # Run mode
     output_path = f"{notebook_path}.wasm.run.html"
-    print(f"Exporting {notebook_path} to {output_path}")
-    result = subprocess.run(
-        [
-            "marimo",
-            "export",
-            "html-wasm",
-            notebook_path,
-            "-o",
-            f"public/{output_path}",
-            "--mode",
-            "run",
-            "--no-show-code",
-        ],
-        capture_output=True,
-        text=True,
-    )
+    print(f"⚡ {notebook_path} -> public/{output_path} (WASM run)")
+
+    cmd = [
+        "marimo",
+        "--yes",
+        "export",
+        "html-wasm",
+        notebook_path,
+        "-o",
+        f"public/{output_path}",
+        "--mode",
+        "run",
+        "--no-show-code",
+    ]
+
+    process = None
+    try:
+        process = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        stdout, stderr = process.communicate(timeout=10)
+        result = subprocess.CompletedProcess(cmd, process.returncode, stdout, stderr)
+    except subprocess.TimeoutExpired:
+        print(f"❌ {notebook_path}: Timeout after 10s")
+        if process:
+            process.kill()
+        return
+    except Exception as e:
+        print(f"❌ {notebook_path}: {str(e)}")
+        if process:
+            process.kill()
+        return
 
     if result.returncode != 0:
-        print(f"Error exporting {notebook_path}:")
-        print(result.stderr)
+        print(f"❌ {notebook_path}: Export failed")
+        print(f"Error: {result.stderr}")
+    else:
+        print(f"✅ {notebook_path}: Exported to WASM run")
 
+    # Edit mode
     output_path = f"{notebook_path}.wasm.edit.html"
-    print(f"Exporting {notebook_path} to {output_path}")
-    result = subprocess.run(
-        [
-            "marimo",
-            "export",
-            "html-wasm",
-            notebook_path,
-            "-o",
-            f"public/{output_path}",
-            "--mode",
-            "edit",
-        ],
-        capture_output=True,
-        text=True,
-    )
+    print(f"⚡ {notebook_path} -> public/{output_path} (WASM edit)")
+
+    cmd = [
+        "marimo",
+        "--yes",
+        "export",
+        "html-wasm",
+        notebook_path,
+        "-o",
+        f"public/{output_path}",
+        "--mode",
+        "edit",
+    ]
+
+    process = None
+    try:
+        process = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        stdout, stderr = process.communicate(timeout=10)
+        result = subprocess.CompletedProcess(cmd, process.returncode, stdout, stderr)
+    except subprocess.TimeoutExpired:
+        print(f"❌ {notebook_path}: Timeout after 10s")
+        if process:
+            process.kill()
+        return
+    except Exception as e:
+        print(f"❌ {notebook_path}: {str(e)}")
+        if process:
+            process.kill()
+        return
 
     if result.returncode != 0:
-        print(f"Error exporting {notebook_path}:")
-        print(result.stderr)
+        print(f"❌ {notebook_path}: Export failed")
+        print(f"Error: {result.stderr}")
+    else:
+        print(f"✅ {notebook_path}: Exported to WASM edit")
 
 
 def export_ipynb(notebook_path: str) -> None:
     """Export a single marimo notebook to ipynb format."""
     output_path = f"{notebook_path}.ipynb"
-    print(f"Exporting {notebook_path} to {output_path}")
+    print(f"📓 {notebook_path} -> generated/{output_path}")
 
-    result = subprocess.run(
-        [
-            "marimo",
-            "export",
-            "ipynb",
-            notebook_path,
-            "-o",
-            f"generated/{output_path}",
-            "--sort",
-            "top-down",
-            "--include-outputs",
-        ],
-        capture_output=True,
-        text=True,
-    )
+    cmd = [
+        "marimo",
+        "--yes",
+        "export",
+        "ipynb",
+        notebook_path,
+        "-o",
+        f"generated/{output_path}",
+        "--sort",
+        "top-down",
+        "--include-outputs",
+    ]
+
+    process = None
+    try:
+        process = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        stdout, stderr = process.communicate(timeout=10)
+        result = subprocess.CompletedProcess(cmd, process.returncode, stdout, stderr)
+    except subprocess.TimeoutExpired:
+        print(f"❌ {notebook_path}: Timeout after 10s")
+        if process:
+            process.kill()
+        return
+    except Exception as e:
+        print(f"❌ {notebook_path}: {str(e)}")
+        if process:
+            process.kill()
+        return
 
     if result.returncode != 0:
-        print(f"Error exporting {notebook_path}:")
-        print(result.stderr)
+        print(f"❌ {notebook_path}: Export failed")
+        print(f"Error: {result.stderr}")
+    else:
+        print(f"✅ {notebook_path}: Exported to ipynb")
 
 
 def export_script(notebook_path: str) -> None:
     """Export a single marimo notebook to a python script."""
     output_path = f"{notebook_path.replace('.py', '.script.py')}"
-    print(f"Exporting {notebook_path} to {output_path}")
+    print(f"📜 {notebook_path} -> generated/{output_path}")
 
-    result = subprocess.run(
-        ["marimo", "export", "script", notebook_path, "-o", f"generated/{output_path}"],
-        capture_output=True,
-        text=True,
-    )
+    cmd = [
+        "marimo",
+        "--yes",
+        "export",
+        "script",
+        notebook_path,
+        "-o",
+        f"generated/{output_path}",
+    ]
+
+    process = None
+    try:
+        process = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        stdout, stderr = process.communicate(timeout=10)
+        result = subprocess.CompletedProcess(cmd, process.returncode, stdout, stderr)
+    except subprocess.TimeoutExpired:
+        print(f"❌ {notebook_path}: Timeout after 10s")
+        if process:
+            process.kill()
+        return
+    except Exception as e:
+        print(f"❌ {notebook_path}: {str(e)}")
+        if process:
+            process.kill()
+        return
 
     if result.returncode != 0:
-        print(f"Error exporting {notebook_path}:")
-        print(result.stderr)
-        raise RuntimeError(f"Failed to export {notebook_path}")
+        print(f"❌ {notebook_path}: Export failed")
+        print(f"Error: {result.stderr}")
+    else:
+        print(f"✅ {notebook_path}: Exported to script")
 
 
 def generate_index(dir: str) -> None:

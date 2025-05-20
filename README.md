@@ -7,11 +7,11 @@ Automated CI pipeline for validating and exporting [marimo](https://github.com/m
 - Automatically exports whitelisted marimo notebooks:
   - to markdown
   - to HTML
+  - to WebAssembly
   - to ipynb
-  - to script
+  - to flat script
 - Triggers on:
-  - (todo) New marimo releases
-  - Pushes to main from this repo
+  - Pushes to `main` from this repo
   - Nightly builds
   - Manual triggers
 

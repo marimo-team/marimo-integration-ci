@@ -134,3 +134,7 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# Generated files we want to ignore
+public/examples/
+data.csv
