@@ -1,7 +1,19 @@
 ---
-title: Arrays And Dicts
-marimo-version: 0.9.34
+title: Arrays And Dicts.Py
+marimo-version: 0.13.10
+header: |-
+  # /// script
+  # requires-python = ">=3.9"
+  # dependencies = [
+  #     "marimo",
+  # ]
+  # ///
 ---
+
+```python {.marimo}
+import marimo as mo
+import random
+```
 
 # Arrays and Dictionaries
 <!---->
@@ -12,17 +24,17 @@ Because UI elements must be assigned to global variables,
 these functions are required when the set of elements to create is not
 known until runtime.
 
-```{.python.marimo}
+```python {.marimo}
 create = mo.ui.button(label="Create new collections")
 ```
 
-```{.python.marimo}
+```python {.marimo}
 create.center()
 ```
 
 UI Elements ...
 
-```{.python.marimo}
+```python {.marimo}
 create
 
 array = mo.ui.array(
@@ -38,7 +50,7 @@ mo.hstack([array, dictionary], justify="space-around")
 
 ... and their values
 
-```{.python.marimo}
+```python {.marimo}
 mo.hstack([array.value, dictionary.value], justify="space-around")
 ```
 
@@ -46,7 +58,7 @@ Key difference between marimo dict and standard python dict:
 
 The main reason to use `mo.ui.dictionary` is for reactive execution — when you interact with an element in a `mo.ui.dictionary`, all cells that reference the `mo.ui.dictionary` run automatically, just like all other ui elements. When you use a regular dictionary, you don't get this reactivity.
 
-```{.python.marimo hide_code="true"}
+```python {.marimo hide_code="true"}
 create
 
 slider = mo.ui.slider(1, 10, show_value=True)
@@ -77,7 +89,7 @@ mo.hstack(
 )
 ```
 
-```{.python.marimo hide_code="true"}
+```python {.marimo hide_code="true"}
 mo_d_ref = {k: mo_d[k].value for k in mo_d.value.keys()}
 py_d_ref = {k: py_d[k].value for k in py_d.keys()}
 mo.hstack(
@@ -90,8 +102,3 @@ mo.hstack(
 ```
 
 Notice that when you interact with the UI elements in the marimo dict, the reference of marimo dict updates automatically. However, when you interact with the elements in the python dict, you need to manually re-run the cell to see the updated values.
-
-```{.python.marimo}
-import marimo as mo
-import random
-```

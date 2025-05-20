@@ -1,13 +1,20 @@
 ---
-title: Layout
-marimo-version: 0.9.34
+title: Layout.Py
+marimo-version: 0.13.10
+header: |-
+  # /// script
+  # requires-python = ">=3.9"
+  # dependencies = [
+  #     "marimo",
+  # ]
+  # ///
 ---
 
 # Stacks
 <!---->
 Use `mo.hstack` and `mo.vstack` to layout outputs in rows and columns.
 
-```{.python.marimo}
+```python {.marimo}
 align = mo.ui.dropdown(
     label="Align", options=["start", "end", "center", "stretch"]
 )
@@ -32,7 +39,7 @@ mo.md(
 
 ## Horizontal Stack: `hstack`
 
-```{.python.marimo}
+```python {.marimo}
 mo.hstack(
     boxes,
     align=align.value,
@@ -44,7 +51,7 @@ mo.hstack(
 
 ## Vertical Stack: `vstack`
 
-```{.python.marimo}
+```python {.marimo}
 mo.vstack(
     boxes,
     align=align.value,
@@ -52,7 +59,7 @@ mo.vstack(
 )
 ```
 
-```{.python.marimo}
+```python {.marimo}
 def create_box(num):
     box_size = size.value + num * 10
     return mo.Html(
@@ -63,6 +70,6 @@ def create_box(num):
 boxes = [create_box(i) for i in range(1, 5)]
 ```
 
-```{.python.marimo}
+```python {.marimo}
 import marimo as mo
 ```
