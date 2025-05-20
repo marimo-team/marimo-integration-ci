@@ -1,14 +1,25 @@
 ---
-title: Batch And Form
-marimo-version: 0.9.34
+title: Batch And Form.Py
+marimo-version: 0.13.10
+header: |-
+  # /// script
+  # requires-python = ">=3.9"
+  # dependencies = [
+  #     "marimo",
+  # ]
+  # ///
 ---
+
+```python {.marimo}
+import marimo as mo
+```
 
 # Batch and Form
 <!---->
 Make custom UI elements using `batch()`, and turn any UI element
 into a form with `form()`.
 
-```{.python.marimo}
+```python {.marimo}
 reset
 
 variables = (
@@ -31,7 +42,7 @@ variables = (
 variables
 ```
 
-```{.python.marimo}
+```python {.marimo}
 if variables.value is not None:
     submitted_values["x"].add(variables.value["x"])
     submitted_values["y"].add(variables.value["y"])
@@ -52,16 +63,12 @@ mo.md(
 ).callout()
 ```
 
-```{.python.marimo}
+```python {.marimo}
 reset
 
 submitted_values = {"x": set(), "y": set()}
 ```
 
-```{.python.marimo}
+```python {.marimo}
 reset = mo.ui.button(label="reset history")
-```
-
-```{.python.marimo}
-import marimo as mo
 ```
