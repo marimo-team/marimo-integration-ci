@@ -1,6 +1,6 @@
 ---
 title: Tabs.Py
-marimo-version: 0.13.10
+marimo-version: 0.13.15
 ---
 
 ```python {.marimo}
