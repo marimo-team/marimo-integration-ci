@@ -1,6 +1,6 @@
 ---
 title: Table.Py
-marimo-version: 0.13.10
+marimo-version: 0.17.0
 ---
 
 ```python {.marimo}
@@ -15,11 +15,41 @@ table = mo.ui.table(
         {"first_name": "Michael", "last_name": "Scott"},
         {"first_name": "Jim", "last_name": "Halpert"},
         {"first_name": "Pam", "last_name": "Beesly"},
-    ]
+    ],
+    # Show full name on hover for each row using column placeholders
+    hover_template="{{first_name}} {{last_name}}",
+    # Add header tooltip for column headers (shown via info icon + title)
+    header_tooltip={
+        "first_name": "Employee's first name",
+        "last_name": "Employee's last name",
+    },
 )
 table
 ```
 
 ```python {.marimo}
+# Per-cell hover: provide a callable for finer control
+def cell_hover(row_id: str, column_name: str, value) -> str:
+    return f"{row_id}:{column_name}={value}"
+
+hover_table = mo.ui.table(
+    [{"a": i, "b": i * i} for i in range(8)],
+    hover_template=cell_hover,
+)
+hover_table
+```
+
+```python {.marimo}
 table.value
+```
+
+```python {.marimo}
+# Demonstrate a long table with a sticky header and a custom max height
+long_rows = [{"row": i, "first_name": f"First {i}", "last_name": f"Last {i}"} for i in range(200)]
+long_table = mo.ui.table(
+    long_rows,
+    pagination=False,
+    max_height=300,
+)
+long_table
 ```
