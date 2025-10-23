@@ -1,5 +1,12 @@
+# /// script
+# requires-python = ">=3.9"
+# dependencies = [
+#     "marimo",
+# ]
+# ///
 
-__generated_with = "0.13.10"
+
+__generated_with = "0.17.0"
 
 # %%
 import marimo as mo
@@ -50,8 +57,8 @@ if variables.value is not None:
     submitted_values["x"].add(variables.value["x"])
     submitted_values["y"].add(variables.value["y"])
 
-x = variables.value["x"] if variables.value else "\ldots"
-y = variables.value["y"] if variables.value else "\ldots"
+x = variables.value["x"] if variables.value else r"\ldots"
+y = variables.value["y"] if variables.value else r"\ldots"
 
 
 mo.md(
