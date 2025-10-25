@@ -1,6 +1,6 @@
 ---
 title: Data Explorer.Py
-marimo-version: 0.17.0
+marimo-version: 0.17.2
 width: medium
 header: |-
   # /// script
