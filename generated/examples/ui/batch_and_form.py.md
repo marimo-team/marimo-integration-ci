@@ -1,6 +1,6 @@
 ---
 title: Batch And Form.Py
-marimo-version: 0.17.0
+marimo-version: 0.17.2
 header: |-
   # /// script
   # requires-python = ">=3.9"
