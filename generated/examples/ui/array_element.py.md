@@ -1,6 +1,6 @@
 ---
 title: Array Element.Py
-marimo-version: 0.17.0
+marimo-version: 0.17.6
 width: medium
 ---
 
