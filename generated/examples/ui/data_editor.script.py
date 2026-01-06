@@ -1,5 +1,5 @@
 
-__generated_with = "0.17.0"
+__generated_with = "0.18.4"
 
 # %%
 import marimo as mo
@@ -22,7 +22,9 @@ editor = mo.ui.data_editor(pl.read_csv(DATA_FILE)).form(bordered=False)
 editor
 
 # %%
-mo.md("""The following cell writes the updated dataframe to disk when the submit button is clicked.""")
+mo.md("""
+The following cell writes the updated dataframe to disk when the submit button is clicked.
+""")
 
 # %%
 mo.stop(editor.value is None, mo.md("Submit your changes."))

@@ -7,7 +7,7 @@
 # ///
 
 
-__generated_with = "0.17.0"
+__generated_with = "0.18.4"
 
 # %%
 import marimo as mo
@@ -16,7 +16,11 @@ import marimo as mo
 from vega_datasets import data
 
 # %%
-dataframe_transformer = mo.ui.dataframe(data.iris())
+lazy_button = mo.ui.checkbox(label="Lazy Dataframe")
+lazy_button
+
+# %%
+dataframe_transformer = mo.ui.dataframe(data.iris(), lazy=lazy_button.value)
 dataframe_transformer
 
 # %%
