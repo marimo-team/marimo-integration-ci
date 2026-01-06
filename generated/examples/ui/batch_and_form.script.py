@@ -6,21 +6,21 @@
 # ///
 
 
-__generated_with = "0.17.0"
+__generated_with = "0.18.4"
 
 # %%
 import marimo as mo
 
 # %%
-mo.md("""# Batch and Form""")
+mo.md("""
+# Batch and Form
+""")
 
 # %%
-mo.md(
-    """
-    Make custom UI elements using `batch()`, and turn any UI element
-    into a form with `form()`.
-    """
-)
+mo.md("""
+Make custom UI elements using `batch()`, and turn any UI element
+into a form with `form()`.
+""")
 
 # %%
 reset = mo.ui.button(label="reset history")

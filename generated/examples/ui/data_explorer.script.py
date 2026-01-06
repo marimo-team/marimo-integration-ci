@@ -7,7 +7,7 @@
 # ///
 
 
-__generated_with = "0.17.0"
+__generated_with = "0.18.4"
 
 # %%
 import marimo as mo

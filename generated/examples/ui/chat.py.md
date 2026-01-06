@@ -1,6 +1,6 @@
 ---
 title: Chat.Py
-marimo-version: 0.17.0
+marimo-version: 0.18.4
 width: medium
 ---
 
