@@ -1,6 +1,6 @@
 ---
-title: Dataframe.Py
-marimo-version: 0.18.4
+title: Dataframe
+marimo-version: 0.19.2
 width: medium
 header: |-
   # /// script
@@ -26,7 +26,17 @@ lazy_button
 ```
 
 ```python {.marimo}
-dataframe_transformer = mo.ui.dataframe(data.iris(), lazy=lazy_button.value)
+def format_length(value: float) -> str:
+    return f"{value:.1f} cm"
+
+dataframe_transformer = mo.ui.dataframe(
+    data.iris(),
+    lazy=lazy_button.value,
+    format_mapping={
+        "sepal_length": format_length,
+        "sepal_width": "{:.1f}".format,
+    },
+)
 dataframe_transformer
 ```
 

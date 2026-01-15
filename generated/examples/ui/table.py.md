@@ -1,6 +1,6 @@
 ---
-title: Table.Py
-marimo-version: 0.18.4
+title: Table
+marimo-version: 0.19.2
 ---
 
 ```python {.marimo}
