@@ -1,6 +1,6 @@
 ---
-title: Layout.Py
-marimo-version: 0.18.4
+title: Layout
+marimo-version: 0.19.2
 header: |-
   # /// script
   # requires-python = ">=3.9"

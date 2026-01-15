@@ -1,6 +1,6 @@
 ---
-title: Arrays And Dicts.Py
-marimo-version: 0.18.4
+title: Arrays And Dicts
+marimo-version: 0.19.2
 header: |-
   # /// script
   # requires-python = ">=3.9"

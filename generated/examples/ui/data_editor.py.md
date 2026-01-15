@@ -1,6 +1,6 @@
 ---
-title: Data Editor.Py
-marimo-version: 0.18.4
+title: Data Editor
+marimo-version: 0.19.2
 width: medium
 ---
 

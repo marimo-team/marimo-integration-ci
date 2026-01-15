@@ -1,13 +1,5 @@
-# /// script
-# requires-python = ">=3.12"
-# dependencies = [
-#     "polars==1.17.1",
-#     "vega-datasets==0.9.0",
-# ]
-# ///
 
-
-__generated_with = "0.18.4"
+__generated_with = "0.19.2"
 
 # %%
 import marimo as mo
