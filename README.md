@@ -17,6 +17,39 @@ Automated CI pipeline for validating and exporting [marimo](https://github.com/m
   - Nightly builds
   - Manual triggers
 
+## Setup
+
+This project uses `uv` for dependency management. To set up locally:
+
+```bash
+# Install uv if you haven't already
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Sync dependencies (including PDF export support)
+uv sync --extra pdf
+
+# Run the export script
+uv run scripts/export_notebooks.py
+```
+
+### System Dependencies for PDF Export
+
+PDF and WebPDF exports require system packages:
+
+```bash
+# Ubuntu/Debian
+sudo apt-get install texlive-xetex texlive-fonts-recommended texlive-plain-generic pandoc
+
+# macOS
+brew install --cask mactex
+brew install pandoc
+```
+
+To skip PDF exports if these aren't available:
+```bash
+uv run scripts/export_notebooks.py --skip-pdf --skip-webpdf
+```
+
 ## Adding notebooks
 
 Add notebooks to whitelist in `scripts/export_notebooks.py`

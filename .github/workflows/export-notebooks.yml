@@ -19,9 +19,6 @@ on:
   # Allow manual trigger
   workflow_dispatch: {}
 
-env:
-  UV_SYSTEM_PYTHON: 1
-
 jobs:
   export-notebooks:
     runs-on: ubuntu-latest
@@ -43,16 +40,15 @@ jobs:
         with:
           python-version: 3.12
 
-      - name: 📦 Install marimo
-        run: |
-          uv pip install marimo
-          uv pip install nbformat polars altair vega_datasets matplotlib pandas pandoc
-
-      - name: 📄 Install LaTeX and Pandoc for PDF export
+      - name: 📄 Install system dependencies (LaTeX and Pandoc)
         run: |
           sudo apt-get update
           sudo apt-get install -y texlive-xetex texlive-fonts-recommended texlive-plain-generic pandoc
         continue-on-error: true
+
+      - name: 📦 Install Python dependencies
+        run: |
+          uv sync --extra pdf
 
       - name: 📂 Clone marimo examples
         run: |

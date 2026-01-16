@@ -252,14 +252,18 @@ def export_pdf(notebook_path: str) -> None:
         print(f"❌ {notebook_path}: ipynb file not found at {ipynb_path}")
         return
 
+    # Use absolute paths and let nbconvert add .pdf extension
+    abs_ipynb_path = os.path.abspath(ipynb_path)
+    abs_output_path = os.path.abspath(f"generated/{notebook_path}")  # No .pdf extension
+
     cmd = [
         "uvx",
         "--with", "nbconvert",
         "--from", "jupyter-core",
         "jupyter", "nbconvert",
         "--to", "pdf",
-        ipynb_path,
-        "--output", f"../../generated/{output_path}",
+        abs_ipynb_path,
+        "--output", abs_output_path,
     ]
 
     process = None
@@ -302,14 +306,18 @@ def export_webpdf(notebook_path: str) -> None:
         print(f"❌ {notebook_path}: ipynb file not found at {ipynb_path}")
         return
 
+    # Use absolute paths and let nbconvert add .pdf extension
+    abs_ipynb_path = os.path.abspath(ipynb_path)
+    abs_output_path = os.path.abspath(f"generated/{notebook_path}.webpdf")  # No .pdf extension
+
     cmd = [
         "uvx",
         "--with", "nbconvert[webpdf]",
         "--from", "jupyter-core",
         "jupyter", "nbconvert",
         "--to", "webpdf",
-        ipynb_path,
-        "--output", f"../../generated/{output_path}",
+        abs_ipynb_path,
+        "--output", abs_output_path,
         "--allow-chromium-download",
     ]
 
@@ -380,6 +388,9 @@ def export_script(notebook_path: str) -> None:
         return
 
     if result.returncode != 0:
+        if "Cannot export a notebook with async code to a flat script" in result.stderr:
+            print(f"⚠️ {notebook_path}: Skipping script export (async code)")
+            return
         print(f"❌ {notebook_path}: Export failed")
         print(f"Error: {result.stderr}")
     else:

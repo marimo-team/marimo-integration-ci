@@ -21,12 +21,18 @@ with app.setup:
 
 @app.cell(hide_code=True)
 def _():
+    import random
     import altair as alt
     import matplotlib.pyplot as plt
     import numpy as np
     import pandas as pd
     import plotly.express as px
     import plotly.graph_objects as go
+
+    # Set random seeds for reproducible snapshots
+    random.seed(42)
+    np.random.seed(42)
+
     return alt, go, np, pd, plt, px
 
 
@@ -103,7 +109,9 @@ def calculate_stats(data) -> dict[str, float]:
 
 
 @app.cell
-def _(np):
+def _(np, random):
+    random.seed(42)
+    np.random.seed(42)
     sample_data = np.random.randn(1000)
     stats = calculate_stats(sample_data)
     mo.md(f"""
@@ -228,7 +236,9 @@ def _():
 
 
 @app.cell
-def _(alt, np, pd):
+def _(alt, np, pd, random):
+    random.seed(42)
+    np.random.seed(42)
     # Create sample data for Altair
     altair_data = pd.DataFrame(
         {
@@ -294,10 +304,13 @@ def _():
 
 
 @app.cell
-def _(go, np):
+def _(go, np, random):
+    random.seed(42)
+    np.random.seed(42)
     # Create a Plotly scatter plot
     x_data = np.random.randn(100)
     y_data = np.random.randn(100)
+    color_data = np.random.randn(100)
 
     plotly_scatter = go.Figure(
         data=go.Scatter(
@@ -306,7 +319,7 @@ def _(go, np):
             mode="markers",
             marker=dict(
                 size=10,
-                color=np.random.randn(100),
+                color=color_data,
                 colorscale="Viridis",
                 showscale=True,
                 colorbar=dict(title="Value"),
@@ -364,7 +377,9 @@ def _():
 
 
 @app.cell
-def _(np, plt):
+def _(np, plt, random):
+    random.seed(42)
+    np.random.seed(42)
     # Create a Matplotlib figure
     fig1, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
@@ -395,7 +410,9 @@ def _(np, plt):
 
 
 @app.cell
-def _(np, plt):
+def _(np, plt, random):
+    random.seed(42)
+    np.random.seed(42)
     # Heatmap example
     fig2, ax = plt.subplots(figsize=(10, 8))
 

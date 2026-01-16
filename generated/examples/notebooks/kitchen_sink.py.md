@@ -21,12 +21,17 @@ import marimo as mo
 ```
 
 ```python {.marimo hide_code="true"}
+import random
 import altair as alt
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+
+# Set random seeds for reproducible snapshots
+random.seed(42)
+np.random.seed(42)
 ```
 
 # Kitchen Sink Notebook
@@ -84,6 +89,8 @@ def calculate_stats(data) -> dict[str, float]:
 ```
 
 ```python {.marimo}
+random.seed(42)
+np.random.seed(42)
 sample_data = np.random.randn(1000)
 stats = calculate_stats(sample_data)
 mo.md(f"""
@@ -173,6 +180,8 @@ from sub_notebook import app
 Altair provides a declarative API for creating statistical visualizations.
 
 ```python {.marimo}
+random.seed(42)
+np.random.seed(42)
 # Create sample data for Altair
 altair_data = pd.DataFrame(
     {
@@ -229,9 +238,12 @@ bar_chart
 Plotly provides interactive, publication-quality graphs.
 
 ```python {.marimo}
+random.seed(42)
+np.random.seed(42)
 # Create a Plotly scatter plot
 x_data = np.random.randn(100)
 y_data = np.random.randn(100)
+color_data = np.random.randn(100)
 
 plotly_scatter = go.Figure(
     data=go.Scatter(
@@ -240,7 +252,7 @@ plotly_scatter = go.Figure(
         mode="markers",
         marker=dict(
             size=10,
-            color=np.random.randn(100),
+            color=color_data,
             colorscale="Viridis",
             showscale=True,
             colorbar=dict(title="Value"),
@@ -289,6 +301,8 @@ plotly_3d
 Matplotlib is the foundational plotting library for Python.
 
 ```python {.marimo}
+random.seed(42)
+np.random.seed(42)
 # Create a Matplotlib figure
 fig1, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
@@ -318,6 +332,8 @@ fig1
 ```
 
 ```python {.marimo}
+random.seed(42)
+np.random.seed(42)
 # Heatmap example
 fig2, ax = plt.subplots(figsize=(10, 8))
 

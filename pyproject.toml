@@ -1,0 +1,33 @@
+[project]
+name = "marimo-integration-ci"
+version = "0.1.0"
+description = "Automated CI pipeline for validating and exporting marimo example notebooks"
+requires-python = ">=3.12"
+dependencies = [
+    "marimo",
+    "nbformat",
+    "polars",
+    "plotly",
+    "altair",
+    "vega-datasets",
+    "matplotlib",
+    "pandas",
+    "nbconvert",
+]
+
+[project.optional-dependencies]
+# Optional dependencies for PDF exports
+pdf = [
+    "nbconvert[webpdf]",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+bypass-selection = true
+only-include = ["scripts"]
+
+[dependency-groups]
+dev = []
