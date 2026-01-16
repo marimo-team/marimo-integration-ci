@@ -46,7 +46,13 @@ jobs:
       - name: 📦 Install marimo
         run: |
           uv pip install marimo
-          uv pip install nbformat polars altair vega_datasets matplotlib pandas
+          uv pip install nbformat polars altair vega_datasets matplotlib pandas pandoc
+
+      - name: 📄 Install LaTeX and Pandoc for PDF export
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-xetex texlive-fonts-recommended texlive-plain-generic pandoc
+        continue-on-error: true
 
       - name: 📂 Clone marimo examples
         run: |
@@ -56,7 +62,12 @@ jobs:
 
       - name: 🛠️ Run export script
         run: |
-          uv run scripts/export_notebooks.py
+          uv run scripts/export_notebooks.py || uv run scripts/export_notebooks.py --skip-pdf --skip-webpdf
+        continue-on-error: false
+
+      - name: 🧪 Validate exports
+        run: |
+          uv run scripts/test_exports.py
 
       - name: 📄 List changed files
         continue-on-error: true
@@ -64,10 +75,30 @@ jobs:
           echo "Changed files:"
           git diff --name-only HEAD^ HEAD
 
+      - name: 📊 Export statistics
+        run: |
+          echo "=== Export Statistics ==="
+          echo "Generated files:"
+          find generated -type f | wc -l
+          echo "Public files:"
+          find public -type f | wc -l
+          echo "PDF files:"
+          find generated -name "*.pdf" | wc -l || echo "0"
+          echo "WebPDF files:"
+          find generated -name "*.webpdf.pdf" | wc -l || echo "0"
+
       - name: 📦 Upload Pages Artifact
         uses: actions/upload-pages-artifact@v4
         with:
           path: public
+
+      - name: 📦 Upload Generated Artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: generated-notebooks
+          path: generated/
+          retention-days: 30
 
       - name: 🔄 Create Pull Request
         uses: peter-evans/create-pull-request@v8

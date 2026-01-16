@@ -10,6 +10,8 @@ Automated CI pipeline for validating and exporting [marimo](https://github.com/m
   - to WebAssembly
   - to ipynb
   - to flat script
+  - to PDF (via nbconvert)
+  - to WebPDF (via nbconvert)
 - Triggers on:
   - Pushes to `main` from this repo
   - Nightly builds
