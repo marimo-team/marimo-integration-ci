@@ -1,6 +1,6 @@
 ---
 title: Chat
-marimo-version: 0.19.2
+marimo-version: 0.19.4
 width: medium
 ---
 
