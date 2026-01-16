@@ -1,12 +1,12 @@
 ---
 title: Data Explorer
-marimo-version: 0.19.2
+marimo-version: 0.19.4
 width: medium
 header: |-
   # /// script
   # requires-python = ">=3.12"
   # dependencies = [
-  #     "marimo>=0.19.2",
+  #     "marimo>=0.19.4",
   #     "polars==1.17.1",
   #     "vega-datasets==0.9.0",
   # ]
