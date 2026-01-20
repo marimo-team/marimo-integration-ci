@@ -4,219 +4,254 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Marimo Examples</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+      .font-mono { font-family: 'IBM Plex Mono', monospace; }
+    </style>
   </head>
-  <body class="font-sans max-w-3xl mx-auto p-8 leading-relaxed">
-    <h1 class="mb-8">Marimo Examples</h1>
-    <div class="grid gap-4">
-      <div class="p-4 border border-gray-200 rounded">
-        <h3 class="text-lg font-semibold mb-3">Kitchen Sink</h3>
-        <div class="mb-2">
-          <span class="text-sm font-medium text-gray-600">Interactive:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="examples/notebooks/kitchen_sink.py.html" class="px-3 py-1 bg-blue-100 hover:bg-blue-200 rounded text-sm">Static HTML</a>
-            <a href="examples/notebooks/kitchen_sink.py.wasm.run.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Run</a>
-            <a href="examples/notebooks/kitchen_sink.py.wasm.edit.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Edit</a>
+  <body class="bg-stone-50 text-stone-900 min-h-screen">
+    <div class="max-w-3xl mx-auto px-6 py-12">
+      <header class="mb-10">
+        <h1 class="font-mono text-xl font-medium tracking-tight text-stone-800">
+          <span class="text-teal-600">marimo</span> examples
+        </h1>
+        <p class="mt-1 text-sm text-stone-500">Interactive notebooks and exports</p>
+      </header>
+      <div class="space-y-3">
+        <article class="bg-white border border-stone-200 rounded-lg p-4 hover:border-stone-300 transition-colors">
+          <h2 class="font-mono text-sm font-medium text-stone-800 mb-3">Kitchen Sink</h2>
+          <div class="flex flex-col sm:flex-row sm:items-start gap-3">
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Interactive</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="examples/notebooks/kitchen_sink.py.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-600 rounded transition-colors">HTML</a>
+                <a href="examples/notebooks/kitchen_sink.py.wasm.run.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Run</a>
+                <a href="examples/notebooks/kitchen_sink.py.wasm.edit.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Edit</a>
+              </div>
+            </div>
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Downloads</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="../generated/examples/notebooks/kitchen_sink.py.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-rose-100 hover:bg-rose-200 text-rose-700 rounded transition-colors" download>PDF</a>
+                <a href="../generated/examples/notebooks/kitchen_sink.py.webpdf.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-amber-100 hover:bg-amber-200 text-amber-700 rounded transition-colors" download>WebPDF</a>
+                <a href="../generated/examples/notebooks/kitchen_sink.py.ipynb" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-emerald-100 hover:bg-emerald-200 text-emerald-700 rounded transition-colors" download>Jupyter</a>
+              </div>
+            </div>
           </div>
-        </div>
-        <div>
-          <span class="text-sm font-medium text-gray-600">Downloads:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="../generated/examples/notebooks/kitchen_sink.py.pdf" class="px-3 py-1 bg-red-100 hover:bg-red-200 rounded text-sm" download>PDF</a>
-            <a href="../generated/examples/notebooks/kitchen_sink.py.webpdf.pdf" class="px-3 py-1 bg-orange-100 hover:bg-orange-200 rounded text-sm" download>WebPDF</a>
-            <a href="../generated/examples/notebooks/kitchen_sink.py.ipynb" class="px-3 py-1 bg-green-100 hover:bg-green-200 rounded text-sm" download>Jupyter</a>
+        </article>
+        <article class="bg-white border border-stone-200 rounded-lg p-4 hover:border-stone-300 transition-colors">
+          <h2 class="font-mono text-sm font-medium text-stone-800 mb-3">Array Element</h2>
+          <div class="flex flex-col sm:flex-row sm:items-start gap-3">
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Interactive</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="examples/ui/array_element.py.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-600 rounded transition-colors">HTML</a>
+                <a href="examples/ui/array_element.py.wasm.run.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Run</a>
+                <a href="examples/ui/array_element.py.wasm.edit.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Edit</a>
+              </div>
+            </div>
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Downloads</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="../generated/examples/ui/array_element.py.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-rose-100 hover:bg-rose-200 text-rose-700 rounded transition-colors" download>PDF</a>
+                <a href="../generated/examples/ui/array_element.py.webpdf.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-amber-100 hover:bg-amber-200 text-amber-700 rounded transition-colors" download>WebPDF</a>
+                <a href="../generated/examples/ui/array_element.py.ipynb" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-emerald-100 hover:bg-emerald-200 text-emerald-700 rounded transition-colors" download>Jupyter</a>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="p-4 border border-gray-200 rounded">
-        <h3 class="text-lg font-semibold mb-3">Array Element</h3>
-        <div class="mb-2">
-          <span class="text-sm font-medium text-gray-600">Interactive:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="examples/ui/array_element.py.html" class="px-3 py-1 bg-blue-100 hover:bg-blue-200 rounded text-sm">Static HTML</a>
-            <a href="examples/ui/array_element.py.wasm.run.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Run</a>
-            <a href="examples/ui/array_element.py.wasm.edit.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Edit</a>
+        </article>
+        <article class="bg-white border border-stone-200 rounded-lg p-4 hover:border-stone-300 transition-colors">
+          <h2 class="font-mono text-sm font-medium text-stone-800 mb-3">Arrays And Dicts</h2>
+          <div class="flex flex-col sm:flex-row sm:items-start gap-3">
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Interactive</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="examples/ui/arrays_and_dicts.py.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-600 rounded transition-colors">HTML</a>
+                <a href="examples/ui/arrays_and_dicts.py.wasm.run.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Run</a>
+                <a href="examples/ui/arrays_and_dicts.py.wasm.edit.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Edit</a>
+              </div>
+            </div>
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Downloads</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="../generated/examples/ui/arrays_and_dicts.py.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-rose-100 hover:bg-rose-200 text-rose-700 rounded transition-colors" download>PDF</a>
+                <a href="../generated/examples/ui/arrays_and_dicts.py.webpdf.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-amber-100 hover:bg-amber-200 text-amber-700 rounded transition-colors" download>WebPDF</a>
+                <a href="../generated/examples/ui/arrays_and_dicts.py.ipynb" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-emerald-100 hover:bg-emerald-200 text-emerald-700 rounded transition-colors" download>Jupyter</a>
+              </div>
+            </div>
           </div>
-        </div>
-        <div>
-          <span class="text-sm font-medium text-gray-600">Downloads:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="../generated/examples/ui/array_element.py.pdf" class="px-3 py-1 bg-red-100 hover:bg-red-200 rounded text-sm" download>PDF</a>
-            <a href="../generated/examples/ui/array_element.py.webpdf.pdf" class="px-3 py-1 bg-orange-100 hover:bg-orange-200 rounded text-sm" download>WebPDF</a>
-            <a href="../generated/examples/ui/array_element.py.ipynb" class="px-3 py-1 bg-green-100 hover:bg-green-200 rounded text-sm" download>Jupyter</a>
+        </article>
+        <article class="bg-white border border-stone-200 rounded-lg p-4 hover:border-stone-300 transition-colors">
+          <h2 class="font-mono text-sm font-medium text-stone-800 mb-3">Batch And Form</h2>
+          <div class="flex flex-col sm:flex-row sm:items-start gap-3">
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Interactive</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="examples/ui/batch_and_form.py.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-600 rounded transition-colors">HTML</a>
+                <a href="examples/ui/batch_and_form.py.wasm.run.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Run</a>
+                <a href="examples/ui/batch_and_form.py.wasm.edit.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Edit</a>
+              </div>
+            </div>
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Downloads</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="../generated/examples/ui/batch_and_form.py.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-rose-100 hover:bg-rose-200 text-rose-700 rounded transition-colors" download>PDF</a>
+                <a href="../generated/examples/ui/batch_and_form.py.webpdf.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-amber-100 hover:bg-amber-200 text-amber-700 rounded transition-colors" download>WebPDF</a>
+                <a href="../generated/examples/ui/batch_and_form.py.ipynb" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-emerald-100 hover:bg-emerald-200 text-emerald-700 rounded transition-colors" download>Jupyter</a>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="p-4 border border-gray-200 rounded">
-        <h3 class="text-lg font-semibold mb-3">Arrays And Dicts</h3>
-        <div class="mb-2">
-          <span class="text-sm font-medium text-gray-600">Interactive:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="examples/ui/arrays_and_dicts.py.html" class="px-3 py-1 bg-blue-100 hover:bg-blue-200 rounded text-sm">Static HTML</a>
-            <a href="examples/ui/arrays_and_dicts.py.wasm.run.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Run</a>
-            <a href="examples/ui/arrays_and_dicts.py.wasm.edit.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Edit</a>
+        </article>
+        <article class="bg-white border border-stone-200 rounded-lg p-4 hover:border-stone-300 transition-colors">
+          <h2 class="font-mono text-sm font-medium text-stone-800 mb-3">Chat</h2>
+          <div class="flex flex-col sm:flex-row sm:items-start gap-3">
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Interactive</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="examples/ui/chat.py.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-600 rounded transition-colors">HTML</a>
+                <a href="examples/ui/chat.py.wasm.run.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Run</a>
+                <a href="examples/ui/chat.py.wasm.edit.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Edit</a>
+              </div>
+            </div>
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Downloads</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="../generated/examples/ui/chat.py.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-rose-100 hover:bg-rose-200 text-rose-700 rounded transition-colors" download>PDF</a>
+                <a href="../generated/examples/ui/chat.py.webpdf.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-amber-100 hover:bg-amber-200 text-amber-700 rounded transition-colors" download>WebPDF</a>
+                <a href="../generated/examples/ui/chat.py.ipynb" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-emerald-100 hover:bg-emerald-200 text-emerald-700 rounded transition-colors" download>Jupyter</a>
+              </div>
+            </div>
           </div>
-        </div>
-        <div>
-          <span class="text-sm font-medium text-gray-600">Downloads:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="../generated/examples/ui/arrays_and_dicts.py.pdf" class="px-3 py-1 bg-red-100 hover:bg-red-200 rounded text-sm" download>PDF</a>
-            <a href="../generated/examples/ui/arrays_and_dicts.py.webpdf.pdf" class="px-3 py-1 bg-orange-100 hover:bg-orange-200 rounded text-sm" download>WebPDF</a>
-            <a href="../generated/examples/ui/arrays_and_dicts.py.ipynb" class="px-3 py-1 bg-green-100 hover:bg-green-200 rounded text-sm" download>Jupyter</a>
+        </article>
+        <article class="bg-white border border-stone-200 rounded-lg p-4 hover:border-stone-300 transition-colors">
+          <h2 class="font-mono text-sm font-medium text-stone-800 mb-3">Data Explorer</h2>
+          <div class="flex flex-col sm:flex-row sm:items-start gap-3">
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Interactive</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="examples/ui/data_explorer.py.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-600 rounded transition-colors">HTML</a>
+                <a href="examples/ui/data_explorer.py.wasm.run.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Run</a>
+                <a href="examples/ui/data_explorer.py.wasm.edit.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Edit</a>
+              </div>
+            </div>
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Downloads</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="../generated/examples/ui/data_explorer.py.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-rose-100 hover:bg-rose-200 text-rose-700 rounded transition-colors" download>PDF</a>
+                <a href="../generated/examples/ui/data_explorer.py.webpdf.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-amber-100 hover:bg-amber-200 text-amber-700 rounded transition-colors" download>WebPDF</a>
+                <a href="../generated/examples/ui/data_explorer.py.ipynb" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-emerald-100 hover:bg-emerald-200 text-emerald-700 rounded transition-colors" download>Jupyter</a>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="p-4 border border-gray-200 rounded">
-        <h3 class="text-lg font-semibold mb-3">Batch And Form</h3>
-        <div class="mb-2">
-          <span class="text-sm font-medium text-gray-600">Interactive:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="examples/ui/batch_and_form.py.html" class="px-3 py-1 bg-blue-100 hover:bg-blue-200 rounded text-sm">Static HTML</a>
-            <a href="examples/ui/batch_and_form.py.wasm.run.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Run</a>
-            <a href="examples/ui/batch_and_form.py.wasm.edit.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Edit</a>
+        </article>
+        <article class="bg-white border border-stone-200 rounded-lg p-4 hover:border-stone-300 transition-colors">
+          <h2 class="font-mono text-sm font-medium text-stone-800 mb-3">Data Editor</h2>
+          <div class="flex flex-col sm:flex-row sm:items-start gap-3">
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Interactive</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="examples/ui/data_editor.py.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-600 rounded transition-colors">HTML</a>
+                <a href="examples/ui/data_editor.py.wasm.run.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Run</a>
+                <a href="examples/ui/data_editor.py.wasm.edit.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Edit</a>
+              </div>
+            </div>
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Downloads</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="../generated/examples/ui/data_editor.py.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-rose-100 hover:bg-rose-200 text-rose-700 rounded transition-colors" download>PDF</a>
+                <a href="../generated/examples/ui/data_editor.py.webpdf.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-amber-100 hover:bg-amber-200 text-amber-700 rounded transition-colors" download>WebPDF</a>
+                <a href="../generated/examples/ui/data_editor.py.ipynb" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-emerald-100 hover:bg-emerald-200 text-emerald-700 rounded transition-colors" download>Jupyter</a>
+              </div>
+            </div>
           </div>
-        </div>
-        <div>
-          <span class="text-sm font-medium text-gray-600">Downloads:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="../generated/examples/ui/batch_and_form.py.pdf" class="px-3 py-1 bg-red-100 hover:bg-red-200 rounded text-sm" download>PDF</a>
-            <a href="../generated/examples/ui/batch_and_form.py.webpdf.pdf" class="px-3 py-1 bg-orange-100 hover:bg-orange-200 rounded text-sm" download>WebPDF</a>
-            <a href="../generated/examples/ui/batch_and_form.py.ipynb" class="px-3 py-1 bg-green-100 hover:bg-green-200 rounded text-sm" download>Jupyter</a>
+        </article>
+        <article class="bg-white border border-stone-200 rounded-lg p-4 hover:border-stone-300 transition-colors">
+          <h2 class="font-mono text-sm font-medium text-stone-800 mb-3">Dataframe</h2>
+          <div class="flex flex-col sm:flex-row sm:items-start gap-3">
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Interactive</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="examples/ui/dataframe.py.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-600 rounded transition-colors">HTML</a>
+                <a href="examples/ui/dataframe.py.wasm.run.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Run</a>
+                <a href="examples/ui/dataframe.py.wasm.edit.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Edit</a>
+              </div>
+            </div>
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Downloads</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="../generated/examples/ui/dataframe.py.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-rose-100 hover:bg-rose-200 text-rose-700 rounded transition-colors" download>PDF</a>
+                <a href="../generated/examples/ui/dataframe.py.webpdf.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-amber-100 hover:bg-amber-200 text-amber-700 rounded transition-colors" download>WebPDF</a>
+                <a href="../generated/examples/ui/dataframe.py.ipynb" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-emerald-100 hover:bg-emerald-200 text-emerald-700 rounded transition-colors" download>Jupyter</a>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="p-4 border border-gray-200 rounded">
-        <h3 class="text-lg font-semibold mb-3">Chat</h3>
-        <div class="mb-2">
-          <span class="text-sm font-medium text-gray-600">Interactive:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="examples/ui/chat.py.html" class="px-3 py-1 bg-blue-100 hover:bg-blue-200 rounded text-sm">Static HTML</a>
-            <a href="examples/ui/chat.py.wasm.run.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Run</a>
-            <a href="examples/ui/chat.py.wasm.edit.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Edit</a>
+        </article>
+        <article class="bg-white border border-stone-200 rounded-lg p-4 hover:border-stone-300 transition-colors">
+          <h2 class="font-mono text-sm font-medium text-stone-800 mb-3">Layout</h2>
+          <div class="flex flex-col sm:flex-row sm:items-start gap-3">
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Interactive</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="examples/ui/layout.py.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-600 rounded transition-colors">HTML</a>
+                <a href="examples/ui/layout.py.wasm.run.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Run</a>
+                <a href="examples/ui/layout.py.wasm.edit.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Edit</a>
+              </div>
+            </div>
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Downloads</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="../generated/examples/ui/layout.py.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-rose-100 hover:bg-rose-200 text-rose-700 rounded transition-colors" download>PDF</a>
+                <a href="../generated/examples/ui/layout.py.webpdf.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-amber-100 hover:bg-amber-200 text-amber-700 rounded transition-colors" download>WebPDF</a>
+                <a href="../generated/examples/ui/layout.py.ipynb" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-emerald-100 hover:bg-emerald-200 text-emerald-700 rounded transition-colors" download>Jupyter</a>
+              </div>
+            </div>
           </div>
-        </div>
-        <div>
-          <span class="text-sm font-medium text-gray-600">Downloads:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="../generated/examples/ui/chat.py.pdf" class="px-3 py-1 bg-red-100 hover:bg-red-200 rounded text-sm" download>PDF</a>
-            <a href="../generated/examples/ui/chat.py.webpdf.pdf" class="px-3 py-1 bg-orange-100 hover:bg-orange-200 rounded text-sm" download>WebPDF</a>
-            <a href="../generated/examples/ui/chat.py.ipynb" class="px-3 py-1 bg-green-100 hover:bg-green-200 rounded text-sm" download>Jupyter</a>
+        </article>
+        <article class="bg-white border border-stone-200 rounded-lg p-4 hover:border-stone-300 transition-colors">
+          <h2 class="font-mono text-sm font-medium text-stone-800 mb-3">Table</h2>
+          <div class="flex flex-col sm:flex-row sm:items-start gap-3">
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Interactive</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="examples/ui/table.py.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-600 rounded transition-colors">HTML</a>
+                <a href="examples/ui/table.py.wasm.run.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Run</a>
+                <a href="examples/ui/table.py.wasm.edit.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Edit</a>
+              </div>
+            </div>
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Downloads</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="../generated/examples/ui/table.py.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-rose-100 hover:bg-rose-200 text-rose-700 rounded transition-colors" download>PDF</a>
+                <a href="../generated/examples/ui/table.py.webpdf.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-amber-100 hover:bg-amber-200 text-amber-700 rounded transition-colors" download>WebPDF</a>
+                <a href="../generated/examples/ui/table.py.ipynb" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-emerald-100 hover:bg-emerald-200 text-emerald-700 rounded transition-colors" download>Jupyter</a>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="p-4 border border-gray-200 rounded">
-        <h3 class="text-lg font-semibold mb-3">Data Explorer</h3>
-        <div class="mb-2">
-          <span class="text-sm font-medium text-gray-600">Interactive:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="examples/ui/data_explorer.py.html" class="px-3 py-1 bg-blue-100 hover:bg-blue-200 rounded text-sm">Static HTML</a>
-            <a href="examples/ui/data_explorer.py.wasm.run.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Run</a>
-            <a href="examples/ui/data_explorer.py.wasm.edit.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Edit</a>
+        </article>
+        <article class="bg-white border border-stone-200 rounded-lg p-4 hover:border-stone-300 transition-colors">
+          <h2 class="font-mono text-sm font-medium text-stone-800 mb-3">Tabs</h2>
+          <div class="flex flex-col sm:flex-row sm:items-start gap-3">
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Interactive</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="examples/ui/tabs.py.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-600 rounded transition-colors">HTML</a>
+                <a href="examples/ui/tabs.py.wasm.run.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Run</a>
+                <a href="examples/ui/tabs.py.wasm.edit.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Edit</a>
+              </div>
+            </div>
+            <div class="flex-1">
+              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Downloads</span>
+              <div class="flex flex-wrap gap-1.5 mt-1.5">
+                <a href="../generated/examples/ui/tabs.py.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-rose-100 hover:bg-rose-200 text-rose-700 rounded transition-colors" download>PDF</a>
+                <a href="../generated/examples/ui/tabs.py.webpdf.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-amber-100 hover:bg-amber-200 text-amber-700 rounded transition-colors" download>WebPDF</a>
+                <a href="../generated/examples/ui/tabs.py.ipynb" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-emerald-100 hover:bg-emerald-200 text-emerald-700 rounded transition-colors" download>Jupyter</a>
+              </div>
+            </div>
           </div>
-        </div>
-        <div>
-          <span class="text-sm font-medium text-gray-600">Downloads:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="../generated/examples/ui/data_explorer.py.pdf" class="px-3 py-1 bg-red-100 hover:bg-red-200 rounded text-sm" download>PDF</a>
-            <a href="../generated/examples/ui/data_explorer.py.webpdf.pdf" class="px-3 py-1 bg-orange-100 hover:bg-orange-200 rounded text-sm" download>WebPDF</a>
-            <a href="../generated/examples/ui/data_explorer.py.ipynb" class="px-3 py-1 bg-green-100 hover:bg-green-200 rounded text-sm" download>Jupyter</a>
-          </div>
-        </div>
-      </div>
-      <div class="p-4 border border-gray-200 rounded">
-        <h3 class="text-lg font-semibold mb-3">Data Editor</h3>
-        <div class="mb-2">
-          <span class="text-sm font-medium text-gray-600">Interactive:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="examples/ui/data_editor.py.html" class="px-3 py-1 bg-blue-100 hover:bg-blue-200 rounded text-sm">Static HTML</a>
-            <a href="examples/ui/data_editor.py.wasm.run.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Run</a>
-            <a href="examples/ui/data_editor.py.wasm.edit.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Edit</a>
-          </div>
-        </div>
-        <div>
-          <span class="text-sm font-medium text-gray-600">Downloads:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="../generated/examples/ui/data_editor.py.pdf" class="px-3 py-1 bg-red-100 hover:bg-red-200 rounded text-sm" download>PDF</a>
-            <a href="../generated/examples/ui/data_editor.py.webpdf.pdf" class="px-3 py-1 bg-orange-100 hover:bg-orange-200 rounded text-sm" download>WebPDF</a>
-            <a href="../generated/examples/ui/data_editor.py.ipynb" class="px-3 py-1 bg-green-100 hover:bg-green-200 rounded text-sm" download>Jupyter</a>
-          </div>
-        </div>
-      </div>
-      <div class="p-4 border border-gray-200 rounded">
-        <h3 class="text-lg font-semibold mb-3">Dataframe</h3>
-        <div class="mb-2">
-          <span class="text-sm font-medium text-gray-600">Interactive:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="examples/ui/dataframe.py.html" class="px-3 py-1 bg-blue-100 hover:bg-blue-200 rounded text-sm">Static HTML</a>
-            <a href="examples/ui/dataframe.py.wasm.run.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Run</a>
-            <a href="examples/ui/dataframe.py.wasm.edit.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Edit</a>
-          </div>
-        </div>
-        <div>
-          <span class="text-sm font-medium text-gray-600">Downloads:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="../generated/examples/ui/dataframe.py.pdf" class="px-3 py-1 bg-red-100 hover:bg-red-200 rounded text-sm" download>PDF</a>
-            <a href="../generated/examples/ui/dataframe.py.webpdf.pdf" class="px-3 py-1 bg-orange-100 hover:bg-orange-200 rounded text-sm" download>WebPDF</a>
-            <a href="../generated/examples/ui/dataframe.py.ipynb" class="px-3 py-1 bg-green-100 hover:bg-green-200 rounded text-sm" download>Jupyter</a>
-          </div>
-        </div>
-      </div>
-      <div class="p-4 border border-gray-200 rounded">
-        <h3 class="text-lg font-semibold mb-3">Layout</h3>
-        <div class="mb-2">
-          <span class="text-sm font-medium text-gray-600">Interactive:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="examples/ui/layout.py.html" class="px-3 py-1 bg-blue-100 hover:bg-blue-200 rounded text-sm">Static HTML</a>
-            <a href="examples/ui/layout.py.wasm.run.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Run</a>
-            <a href="examples/ui/layout.py.wasm.edit.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Edit</a>
-          </div>
-        </div>
-        <div>
-          <span class="text-sm font-medium text-gray-600">Downloads:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="../generated/examples/ui/layout.py.pdf" class="px-3 py-1 bg-red-100 hover:bg-red-200 rounded text-sm" download>PDF</a>
-            <a href="../generated/examples/ui/layout.py.webpdf.pdf" class="px-3 py-1 bg-orange-100 hover:bg-orange-200 rounded text-sm" download>WebPDF</a>
-            <a href="../generated/examples/ui/layout.py.ipynb" class="px-3 py-1 bg-green-100 hover:bg-green-200 rounded text-sm" download>Jupyter</a>
-          </div>
-        </div>
-      </div>
-      <div class="p-4 border border-gray-200 rounded">
-        <h3 class="text-lg font-semibold mb-3">Table</h3>
-        <div class="mb-2">
-          <span class="text-sm font-medium text-gray-600">Interactive:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="examples/ui/table.py.html" class="px-3 py-1 bg-blue-100 hover:bg-blue-200 rounded text-sm">Static HTML</a>
-            <a href="examples/ui/table.py.wasm.run.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Run</a>
-            <a href="examples/ui/table.py.wasm.edit.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Edit</a>
-          </div>
-        </div>
-        <div>
-          <span class="text-sm font-medium text-gray-600">Downloads:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="../generated/examples/ui/table.py.pdf" class="px-3 py-1 bg-red-100 hover:bg-red-200 rounded text-sm" download>PDF</a>
-            <a href="../generated/examples/ui/table.py.webpdf.pdf" class="px-3 py-1 bg-orange-100 hover:bg-orange-200 rounded text-sm" download>WebPDF</a>
-            <a href="../generated/examples/ui/table.py.ipynb" class="px-3 py-1 bg-green-100 hover:bg-green-200 rounded text-sm" download>Jupyter</a>
-          </div>
-        </div>
-      </div>
-      <div class="p-4 border border-gray-200 rounded">
-        <h3 class="text-lg font-semibold mb-3">Tabs</h3>
-        <div class="mb-2">
-          <span class="text-sm font-medium text-gray-600">Interactive:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="examples/ui/tabs.py.html" class="px-3 py-1 bg-blue-100 hover:bg-blue-200 rounded text-sm">Static HTML</a>
-            <a href="examples/ui/tabs.py.wasm.run.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Run</a>
-            <a href="examples/ui/tabs.py.wasm.edit.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Edit</a>
-          </div>
-        </div>
-        <div>
-          <span class="text-sm font-medium text-gray-600">Downloads:</span>
-          <div class="flex gap-2 mt-1">
-            <a href="../generated/examples/ui/tabs.py.pdf" class="px-3 py-1 bg-red-100 hover:bg-red-200 rounded text-sm" download>PDF</a>
-            <a href="../generated/examples/ui/tabs.py.webpdf.pdf" class="px-3 py-1 bg-orange-100 hover:bg-orange-200 rounded text-sm" download>WebPDF</a>
-            <a href="../generated/examples/ui/tabs.py.ipynb" class="px-3 py-1 bg-green-100 hover:bg-green-200 rounded text-sm" download>Jupyter</a>
-          </div>
-        </div>
+        </article>
       </div>
     </div>
   </body>
