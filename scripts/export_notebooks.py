@@ -258,12 +258,17 @@ def export_pdf(notebook_path: str) -> None:
 
     cmd = [
         "uvx",
-        "--with", "nbconvert",
-        "--from", "jupyter-core",
-        "jupyter", "nbconvert",
-        "--to", "pdf",
+        "--with",
+        "nbconvert",
+        "--from",
+        "jupyter-core",
+        "jupyter",
+        "nbconvert",
+        "--to",
+        "pdf",
         abs_ipynb_path,
-        "--output", abs_output_path,
+        "--output",
+        abs_output_path,
     ]
 
     process = None
@@ -291,7 +296,9 @@ def export_pdf(notebook_path: str) -> None:
         print(f"❌ {notebook_path}: PDF export failed")
         print(f"Error: {result.stderr}")
         if "xelatex" in result.stderr.lower() or "latex" in result.stderr.lower():
-            print("  Hint: LaTeX may not be installed. Install texlive-xetex or similar.")
+            print(
+                "  Hint: LaTeX may not be installed. Install texlive-xetex or similar."
+            )
     else:
         print(f"✅ {notebook_path}: Exported to PDF")
 
@@ -308,16 +315,23 @@ def export_webpdf(notebook_path: str) -> None:
 
     # Use absolute paths and let nbconvert add .pdf extension
     abs_ipynb_path = os.path.abspath(ipynb_path)
-    abs_output_path = os.path.abspath(f"generated/{notebook_path}.webpdf")  # No .pdf extension
+    abs_output_path = os.path.abspath(
+        f"generated/{notebook_path}.webpdf"
+    )  # No .pdf extension
 
     cmd = [
         "uvx",
-        "--with", "nbconvert[webpdf]",
-        "--from", "jupyter-core",
-        "jupyter", "nbconvert",
-        "--to", "webpdf",
+        "--with",
+        "nbconvert[webpdf]",
+        "--from",
+        "jupyter-core",
+        "jupyter",
+        "nbconvert",
+        "--to",
+        "webpdf",
         abs_ipynb_path,
-        "--output", abs_output_path,
+        "--output",
+        abs_output_path,
         "--allow-chromium-download",
     ]
 
@@ -346,7 +360,9 @@ def export_webpdf(notebook_path: str) -> None:
         print(f"❌ {notebook_path}: WebPDF export failed")
         print(f"Error: {result.stderr}")
         if "chromium" in result.stderr.lower():
-            print("  Hint: Chromium download may have failed. Check network connectivity.")
+            print(
+                "  Hint: Chromium download may have failed. Check network connectivity."
+            )
     else:
         print(f"✅ {notebook_path}: Exported to WebPDF")
 
@@ -409,11 +425,23 @@ def generate_index(dir: str) -> None:
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Marimo Examples</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+      .font-mono { font-family: 'IBM Plex Mono', monospace; }
+    </style>
   </head>
-  <body class="font-sans max-w-3xl mx-auto p-8 leading-relaxed">
-    <h1 class="mb-8">Marimo Examples</h1>
-    <div class="grid gap-4">
+  <body class="bg-stone-50 text-stone-900 min-h-screen">
+    <div class="max-w-3xl mx-auto px-6 py-12">
+      <header class="mb-10">
+        <h1 class="font-mono text-xl font-medium tracking-tight text-stone-800">
+          <span class="text-teal-600">marimo</span> examples
+        </h1>
+        <p class="mt-1 text-sm text-stone-500">Interactive notebooks and exports</p>
+      </header>
+      <div class="space-y-3">
 """
         )
         for notebook in WHITELISTED_NOTEBOOKS:
@@ -421,30 +449,34 @@ def generate_index(dir: str) -> None:
             display_name = notebook_name.replace("_", " ").title()
 
             f.write(
-                f'      <div class="p-4 border border-gray-200 rounded">\n'
-                f'        <h3 class="text-lg font-semibold mb-3">{display_name}</h3>\n'
-                f'        <div class="mb-2">\n'
-                f'          <span class="text-sm font-medium text-gray-600">Interactive:</span>\n'
-                f'          <div class="flex gap-2 mt-1">\n'
-                f'            <a href="{os.path.join(dir, notebook)}.html" class="px-3 py-1 bg-blue-100 hover:bg-blue-200 rounded text-sm">Static HTML</a>\n'
-                f'            <a href="{os.path.join(dir, notebook)}.wasm.run.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Run</a>\n'
-                f'            <a href="{os.path.join(dir, notebook)}.wasm.edit.html" class="px-3 py-1 bg-purple-100 hover:bg-purple-200 rounded text-sm">WASM Edit</a>\n'
-                f'          </div>\n'
-                f'        </div>\n'
-                f'        <div>\n'
-                f'          <span class="text-sm font-medium text-gray-600">Downloads:</span>\n'
-                f'          <div class="flex gap-2 mt-1">\n'
-                f'            <a href="../generated/{os.path.join(dir, notebook)}.pdf" class="px-3 py-1 bg-red-100 hover:bg-red-200 rounded text-sm" download>PDF</a>\n'
-                f'            <a href="../generated/{os.path.join(dir, notebook)}.webpdf.pdf" class="px-3 py-1 bg-orange-100 hover:bg-orange-200 rounded text-sm" download>WebPDF</a>\n'
-                f'            <a href="../generated/{os.path.join(dir, notebook)}.ipynb" class="px-3 py-1 bg-green-100 hover:bg-green-200 rounded text-sm" download>Jupyter</a>\n'
-                f'          </div>\n'
-                f'        </div>\n'
-                f'      </div>\n'
+                f'        <article class="bg-white border border-stone-200 rounded-lg p-4 hover:border-stone-300 transition-colors">\n'
+                f'          <h2 class="font-mono text-sm font-medium text-stone-800 mb-3">{display_name}</h2>\n'
+                f'          <div class="flex flex-col sm:flex-row sm:items-start gap-3">\n'
+                f'            <div class="flex-1">\n'
+                f'              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Interactive</span>\n'
+                f'              <div class="flex flex-wrap gap-1.5 mt-1.5">\n'
+                f'                <a href="{os.path.join(dir, notebook)}.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-stone-100 hover:bg-stone-200 text-stone-600 rounded transition-colors">HTML</a>\n'
+                f'                <a href="{os.path.join(dir, notebook)}.wasm.run.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Run</a>\n'
+                f'                <a href="{os.path.join(dir, notebook)}.wasm.edit.html" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-violet-100 hover:bg-violet-200 text-violet-700 rounded transition-colors">WASM Edit</a>\n'
+                f"              </div>\n"
+                f"            </div>\n"
+                f'            <div class="flex-1">\n'
+                f'              <span class="text-[11px] uppercase tracking-wide text-stone-400 font-medium">Downloads</span>\n'
+                f'              <div class="flex flex-wrap gap-1.5 mt-1.5">\n'
+                f'                <a href="../generated/{os.path.join(dir, notebook)}.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-rose-100 hover:bg-rose-200 text-rose-700 rounded transition-colors" download>PDF</a>\n'
+                f'                <a href="../generated/{os.path.join(dir, notebook)}.webpdf.pdf" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-amber-100 hover:bg-amber-200 text-amber-700 rounded transition-colors" download>WebPDF</a>\n'
+                f'                <a href="../generated/{os.path.join(dir, notebook)}.ipynb" class="inline-flex items-center px-2.5 py-1 text-xs font-medium bg-emerald-100 hover:bg-emerald-200 text-emerald-700 rounded transition-colors" download>Jupyter</a>\n'
+                f"              </div>\n"
+                f"            </div>\n"
+                f"          </div>\n"
+                f"        </article>\n"
             )
         f.write(
-            """    </div>
+            """      </div>
+    </div>
   </body>
-</html>"""
+</html>
+"""
         )
 
 
@@ -479,9 +511,9 @@ def main():
     for notebook in WHITELISTED_NOTEBOOKS:
         notebook_path = os.path.join(args.examples_dir, notebook)
         if os.path.exists(notebook_path):
-            print(f"\n{'='*60}")
+            print(f"\n{'=' * 60}")
             print(f"Processing: {notebook}")
-            print(f"{'='*60}")
+            print(f"{'=' * 60}")
 
             export_markdown(notebook_path)
             export_html(notebook_path)
@@ -496,9 +528,9 @@ def main():
         else:
             print(f"Warning: Notebook not found: {notebook_path}")
 
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print("Export complete!")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
 
 
 if __name__ == "__main__":

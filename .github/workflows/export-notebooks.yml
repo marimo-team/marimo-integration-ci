@@ -50,13 +50,9 @@ jobs:
         run: |
           uv sync --extra pdf
 
-      - name: 📂 Clone marimo examples
+      - name: 📂 Setup examples
         run: |
-          git clone --depth 1 --filter=blob:none --sparse https://github.com/marimo-team/marimo.git marimo
-          cd marimo && git sparse-checkout set examples && cd ..
-          mv marimo/examples . && rm -rf marimo
-          # Move notebooks to examples/notebooks
-          cp -r notebooks examples/notebooks
+          uv run scripts/setup_examples.py
 
       - name: 🛠️ Run export script
         run: |

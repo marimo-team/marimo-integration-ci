@@ -27,10 +27,26 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Sync dependencies (including PDF export support)
 uv sync --extra pdf
+```
+
+### Clone marimo examples
+
+In CI, the workflow clones example notebooks from [marimo-team/marimo](https://github.com/marimo-team/marimo). To mirror this locally:
+
+```bash
+# First time: clone marimo examples
+uv run scripts/setup_examples.py
 
 # Run the export script
 uv run scripts/export_notebooks.py
 ```
+
+The setup script will:
+1. Sparse-clone `marimo-team/marimo` to get the `examples/` folder
+2. Copy your local `notebooks/` into `examples/notebooks/`
+3. Clean up the cloned repo
+
+After setup, you can re-run exports anytime with `uv run scripts/export_notebooks.py`.
 
 ### System Dependencies for PDF Export
 
