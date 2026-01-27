@@ -1,4 +1,4 @@
-# // script
+# /// script
 # requires-python = ">=3.9"
 # dependencies = [
 #     "marimo",
@@ -8,7 +8,7 @@
 #     "pandas",
 #     "plotly",
 # ]
-# //
+# ///
 
 import marimo
 
