@@ -50,6 +50,10 @@ jobs:
         run: |
           uv sync --extra pdf
 
+      - name: 🎭 Install Chromium (for WebPDF)
+        run: |
+          uv run python -m playwright install --with-deps chromium
+
       - name: 🖼️ PDF visual snapshot test
         id: pdf_snapshot
         run: |
