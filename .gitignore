@@ -1,6 +1,9 @@
 # marimo
 /examples
 
+# Snapshot artifacts (generated locally / uploaded in CI on failure)
+/snapshot_artifacts/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
