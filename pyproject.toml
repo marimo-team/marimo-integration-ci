@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Automated CI pipeline for validating and exporting marimo example notebooks"
 requires-python = ">=3.12"
 dependencies = [
-    "marimo",
+    "marimo==0.19.7",
     "nbformat",
     "polars",
     "plotly",
@@ -13,6 +13,7 @@ dependencies = [
     "matplotlib",
     "pandas",
     "nbconvert",
+    "pillow",
 ]
 
 [project.optional-dependencies]
