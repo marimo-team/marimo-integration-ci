@@ -30,6 +30,11 @@ FIXTURES: dict[str, Path] = {
 
 DPI = 144
 
+POPPLER_TIPS = [
+    "Tip (Ubuntu/Debian): sudo apt-get install poppler-utils",
+    "Tip (macOS): brew install poppler",
+]
+
 
 def _page_label(page: int, *, width: int) -> str:
     """Format a page number with zero padding for stable filenames."""
@@ -78,19 +83,33 @@ def _pdf_page_count(pdf_path: Path) -> int:
     pdfinfo = shutil.which("pdfinfo")
     if pdfinfo is None:
         raise RuntimeError(
-            "pdfinfo not found.\n\n"
-            "Tip (Ubuntu/Debian): sudo apt-get install poppler-utils\n"
+            "\n".join(
+                [
+                    "pdfinfo not found.",
+                    "",
+                    *POPPLER_TIPS,
+                ]
+            )
         )
 
     result = _run([pdfinfo, str(pdf_path)], timeout_s=30)
     if result.returncode != 0:
-        msg = (
-            "Failed to read PDF metadata.\n\n"
-            f"Command:\n  {pdfinfo} {pdf_path}\n\n"
-            f"stdout:\n{result.stdout}\n\n"
-            f"stderr:\n{result.stderr}\n"
+        raise RuntimeError(
+            "\n".join(
+                [
+                    "Failed to read PDF metadata.",
+                    "",
+                    "Command:",
+                    f"  {pdfinfo} {pdf_path}",
+                    "",
+                    "stdout:",
+                    result.stdout.rstrip(),
+                    "",
+                    "stderr:",
+                    result.stderr.rstrip(),
+                ]
+            )
         )
-        raise RuntimeError(msg)
 
     for line in result.stdout.splitlines():
         if line.startswith("Pages:"):
@@ -124,21 +143,35 @@ def _export_pdf(notebook: Path, out_pdf: Path, *, webpdf: bool) -> None:
     if result.returncode == 0:
         return
 
-    combined = f"{result.stdout}\n{result.stderr}"
+    combined = "\n".join([result.stdout, result.stderr])
     if "No such command 'pdf'" in combined:
         raise RuntimeError(
-            "`marimo export pdf` not available.\n\n"
-            "This repo expects marimo>=0.19.7. Try:\n"
-            "  uv sync --extra pdf\n"
+            "\n".join(
+                [
+                    "`marimo export pdf` not available.",
+                    "",
+                    "This repo expects marimo>=0.19.7. Try:",
+                    "  uv sync --extra pdf",
+                ]
+            )
         )
 
-    msg = (
-        "PDF export failed.\n\n"
-        f"Command:\n  {' '.join(cmd)}\n\n"
-        f"stdout:\n{result.stdout}\n\n"
-        f"stderr:\n{result.stderr}\n"
+    raise RuntimeError(
+        "\n".join(
+            [
+                "PDF export failed.",
+                "",
+                "Command:",
+                f"  {' '.join(cmd)}",
+                "",
+                "stdout:",
+                result.stdout.rstrip(),
+                "",
+                "stderr:",
+                result.stderr.rstrip(),
+            ]
+        )
     )
-    raise RuntimeError(msg)
 
 
 def _rasterize_page(pdf_path: Path, out_png: Path, *, page: int) -> None:
@@ -146,8 +179,13 @@ def _rasterize_page(pdf_path: Path, out_png: Path, *, page: int) -> None:
     pdftoppm = shutil.which("pdftoppm")
     if pdftoppm is None:
         raise RuntimeError(
-            "pdftoppm not found.\n\n"
-            "Tip (Ubuntu/Debian): sudo apt-get install poppler-utils\n"
+            "\n".join(
+                [
+                    "pdftoppm not found.",
+                    "",
+                    *POPPLER_TIPS,
+                ]
+            )
         )
 
     out_png.parent.mkdir(parents=True, exist_ok=True)
@@ -170,13 +208,22 @@ def _rasterize_page(pdf_path: Path, out_png: Path, *, page: int) -> None:
 
     result = _run(cmd, timeout_s=120)
     if result.returncode != 0:
-        msg = (
-            "Rasterization failed.\n\n"
-            f"Command:\n  {' '.join(cmd)}\n\n"
-            f"stdout:\n{result.stdout}\n\n"
-            f"stderr:\n{result.stderr}\n"
+        raise RuntimeError(
+            "\n".join(
+                [
+                    "Rasterization failed.",
+                    "",
+                    "Command:",
+                    f"  {' '.join(cmd)}",
+                    "",
+                    "stdout:",
+                    result.stdout.rstrip(),
+                    "",
+                    "stderr:",
+                    result.stderr.rstrip(),
+                ]
+            )
         )
-        raise RuntimeError(msg)
 
     produced_candidates = sorted(prefix.parent.glob(f"{prefix.name}-*.png"))
     if not produced_candidates:
@@ -196,8 +243,13 @@ def _latex_date_mask_boxes(pdf_path: Path, *, page: int) -> list[tuple[int, int,
     pdftotext = shutil.which("pdftotext")
     if pdftotext is None:
         raise RuntimeError(
-            "pdftotext not found.\n\n"
-            "Tip (Ubuntu/Debian): sudo apt-get install poppler-utils\n"
+            "\n".join(
+                [
+                    "pdftotext not found.",
+                    "",
+                    *POPPLER_TIPS,
+                ]
+            )
         )
 
     cmd = [
@@ -212,13 +264,22 @@ def _latex_date_mask_boxes(pdf_path: Path, *, page: int) -> list[tuple[int, int,
     ]
     result = _run(cmd, timeout_s=60)
     if result.returncode != 0:
-        msg = (
-            "Extracting PDF text boxes failed.\n\n"
-            f"Command:\n  {' '.join(cmd)}\n\n"
-            f"stdout:\n{result.stdout}\n\n"
-            f"stderr:\n{result.stderr}\n"
+        raise RuntimeError(
+            "\n".join(
+                [
+                    "Extracting PDF text boxes failed.",
+                    "",
+                    "Command:",
+                    f"  {' '.join(cmd)}",
+                    "",
+                    "stdout:",
+                    result.stdout.rstrip(),
+                    "",
+                    "stderr:",
+                    result.stderr.rstrip(),
+                ]
+            )
         )
-        raise RuntimeError(msg)
 
     word_re = re.compile(
         r'<word xMin="(?P<x0>[^"]+)" yMin="(?P<y0>[^"]+)" '
@@ -365,12 +426,42 @@ def _run_fixture_mode(fixture: str, *, mode: str, update: bool) -> int:
             _export_pdf(notebook, out_pdf, webpdf=webpdf)
         except RuntimeError as e:
             msg = str(e)
-            if webpdf and ("playwright" in msg.lower() or "chromium" in msg.lower()):
-                msg += (
-                    "\n\nTip: WebPDF export requires Chromium. Install it with:\n\n"
-                    "  uv run python -m playwright install chromium\n"
+            lower = msg.lower()
+
+            lines = [msg]
+            if "no module named" in lower and ("nbconvert" in lower or "nbformat" in lower):
+                lines.extend(
+                    [
+                        "",
+                        "Tip: PDF export requires nbformat and nbconvert. Install Python deps with:",
+                        "",
+                        "  uv sync --extra pdf",
+                    ]
                 )
-            raise RuntimeError(msg) from None
+
+            if mode == "latex" and ("pandoc" in lower or "xelatex" in lower or "texlive" in lower):
+                lines.extend(
+                    [
+                        "",
+                        "Tip: LaTeX PDF export requires a TeX distribution + pandoc.",
+                        "",
+                        "  Ubuntu/Debian: sudo apt-get install texlive-xetex texlive-fonts-recommended "
+                        "texlive-plain-generic pandoc",
+                        "  macOS: brew install --cask mactex && brew install pandoc",
+                    ]
+                )
+
+            if webpdf and ("playwright" in lower or "chromium" in lower):
+                lines.extend(
+                    [
+                        "",
+                        "Tip: WebPDF export requires Chromium. Install it with:",
+                        "",
+                        "  uv run python -m playwright install chromium",
+                    ]
+                )
+
+            raise RuntimeError("\n".join(lines)) from None
 
         page_count = _pdf_page_count(out_pdf)
         width = max(2, len(str(page_count)))
