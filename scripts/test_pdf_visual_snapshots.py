@@ -1,8 +1,19 @@
 #!/usr/bin/env python3
-"""Visual snapshot test for `marimo export pdf` (LaTeX/Pandoc).
+"""Visual snapshot tests for `marimo export pdf`.
 
-Exports a small, deterministic marimo notebook to PDF, rasterizes page 1, masks
-the dynamic LaTeX date, and compares against a committed baseline PNG.
+This script exports a small, deterministic marimo notebook to PDF in both:
+- LaTeX/Pandoc mode (`--no-webpdf`)
+- WebPDF (Chromium) mode (`--webpdf`)
+
+It rasterizes page 1 at a fixed DPI and compares against committed baseline
+PNGs.
+
+Why PNG snapshots (not raw PDF bytes)?
+- PDF bytes are high-churn (metadata/toolchain changes).
+- Visual diffs are easier to review and much smaller in surface area.
+
+LaTeX mode includes the current date in the rendered output by default; we mask
+that date region so snapshots are stable across days.
 """
 
 from __future__ import annotations
@@ -22,13 +33,19 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 FIXTURE_NOTEBOOK = REPO_ROOT / "notebooks" / "pdf_snapshot_smoke.py"
 
 SNAPSHOT_NAME = "pdf_snapshot_smoke"
-BASELINE_DIR = REPO_ROOT / "snapshots" / "pdf" / SNAPSHOT_NAME
-BASELINE_PAGE_1 = BASELINE_DIR / "page-1.png"
-
-ARTIFACTS_DIR = REPO_ROOT / "snapshot_artifacts" / "pdf" / SNAPSHOT_NAME
 
 PAGE = 1
 DPI = 144
+
+
+def _baseline_page_1(mode: str) -> Path:
+    """Return the baseline PNG path for the given export mode."""
+    return REPO_ROOT / "snapshots" / "pdf" / SNAPSHOT_NAME / mode / "page-1.png"
+
+
+def _artifacts_dir(mode: str) -> Path:
+    """Return the artifacts directory path for the given export mode."""
+    return REPO_ROOT / "snapshot_artifacts" / "pdf" / SNAPSHOT_NAME / mode
 
 
 def _run(cmd: list[str], *, timeout_s: int) -> subprocess.CompletedProcess[str]:
@@ -51,7 +68,7 @@ def _find_marimo_cmd() -> list[str]:
     return [sys.executable, "-m", "marimo"]
 
 
-def _export_pdf(out_pdf: Path) -> None:
+def _export_pdf(out_pdf: Path, *, webpdf: bool) -> None:
     """Export the fixture notebook to a PDF using marimo's CLI."""
     if not FIXTURE_NOTEBOOK.exists():
         raise FileNotFoundError(f"Fixture notebook not found: {FIXTURE_NOTEBOOK}")
@@ -65,7 +82,7 @@ def _export_pdf(out_pdf: Path) -> None:
         "--output",
         str(out_pdf),
         "--include-outputs",
-        "--no-webpdf",
+        "--webpdf" if webpdf else "--no-webpdf",
         "--no-sandbox",
     ]
 
@@ -134,7 +151,7 @@ def _rasterize_page(pdf_path: Path, out_png: Path) -> None:
 
 
 def _latex_date_mask_boxes(pdf_path: Path) -> list[tuple[int, int, int, int]]:
-    """Return pixel-space boxes to mask dynamic LaTeX date text on page 1."""
+    """Return pixel-space boxes to mask LaTeX's dynamic date text."""
     pdftotext = shutil.which("pdftotext")
     if pdftotext is None:
         raise RuntimeError(
@@ -176,14 +193,13 @@ def _latex_date_mask_boxes(pdf_path: Path) -> list[tuple[int, int, int, int]]:
             y1 = float(m.group("y1"))
         except ValueError:
             continue
-        text = m.group("text").strip()
-        words.append((x0, y0, x1, y1, text))
+        words.append((x0, y0, x1, y1, m.group("text").strip()))
 
     def _same_line(y_a: float, y_b: float) -> bool:
         return abs(y_a - y_b) <= 0.75
 
     def _is_month(s: str) -> bool:
-        months = {
+        return s.lower() in {
             "january",
             "february",
             "march",
@@ -197,7 +213,6 @@ def _latex_date_mask_boxes(pdf_path: Path) -> list[tuple[int, int, int, int]]:
             "november",
             "december",
         }
-        return s.lower() in months
 
     def _is_day_with_comma(s: str) -> bool:
         return re.fullmatch(r"\d{1,2},", s) is not None
@@ -255,8 +270,11 @@ def _mask_boxes(img: Image.Image, boxes: list[tuple[int, int, int, int]]) -> Non
         draw.rectangle([x0, y0, x1, y1], fill=(255, 255, 255, 255))
 
 
-def _normalize_image(img: Image.Image, *, pdf_path: Path) -> Image.Image:
+def _normalize_image(mode: str, img: Image.Image, *, pdf_path: Path) -> Image.Image:
     """Mask LaTeX's dynamic date so snapshots are stable across days."""
+    if mode != "latex":
+        return img
+
     boxes = _latex_date_mask_boxes(pdf_path)
     if not boxes:
         return img
@@ -283,6 +301,73 @@ def _compare_images(expected: Image.Image, actual: Image.Image, diff_path: Path)
     return False
 
 
+def _run_mode(mode: str, *, update: bool) -> int:
+    """Run the snapshot test for a single export mode."""
+    if mode not in {"latex", "webpdf"}:
+        raise ValueError(f"Unknown mode: {mode}")
+
+    baseline_page_1 = _baseline_page_1(mode)
+    artifacts_dir = _artifacts_dir(mode)
+    webpdf = mode == "webpdf"
+
+    with tempfile.TemporaryDirectory() as td:
+        td_path = Path(td)
+        out_pdf = td_path / f"{mode}.pdf"
+        out_png = td_path / "page-1.png"
+
+        try:
+            _export_pdf(out_pdf, webpdf=webpdf)
+        except RuntimeError as e:
+            msg = str(e)
+            if webpdf and ("playwright" in msg.lower() or "chromium" in msg.lower()):
+                msg += (
+                    "\n\nTip: WebPDF export requires Chromium. Install it with:\n\n"
+                    "  uv run python -m playwright install chromium\n"
+                )
+            raise RuntimeError(msg) from None
+
+        _rasterize_page(out_pdf, out_png)
+
+        rendered = Image.open(out_png).convert("RGBA")
+        rendered = _normalize_image(mode, rendered, pdf_path=out_pdf)
+
+        if update:
+            baseline_page_1.parent.mkdir(parents=True, exist_ok=True)
+            rendered.save(baseline_page_1)
+            print(f"✅ Updated baseline ({mode}): {baseline_page_1.relative_to(REPO_ROOT)}")
+            return 0
+
+        if not baseline_page_1.exists():
+            print(f"❌ Missing baseline ({mode}): {baseline_page_1.relative_to(REPO_ROOT)}")
+            print("   Tip: run `uv run scripts/test_pdf_visual_snapshots.py --update`")
+            return 2
+
+        expected = Image.open(baseline_page_1).convert("RGBA")
+        expected = _normalize_image(mode, expected, pdf_path=out_pdf)
+
+        if artifacts_dir.exists():
+            shutil.rmtree(artifacts_dir)
+        artifacts_dir.mkdir(parents=True, exist_ok=True)
+
+        actual_saved = artifacts_dir / "actual-page-1.png"
+        diff_saved = artifacts_dir / "diff-page-1.png"
+        rendered.save(actual_saved)
+
+        ok = _compare_images(expected, rendered, diff_saved)
+        if ok:
+            shutil.rmtree(artifacts_dir)
+            print(f"✅ PDF visual snapshot matched ({mode}).")
+            return 0
+
+        print(f"❌ PDF visual snapshot mismatch ({mode}).")
+        print(f"   Baseline: {baseline_page_1.relative_to(REPO_ROOT)}")
+        print(f"   Actual:   {actual_saved.relative_to(REPO_ROOT)}")
+        print(f"   Diff:     {diff_saved.relative_to(REPO_ROOT)}")
+        print("   Tip: if this is expected, update with:")
+        print("     uv run scripts/test_pdf_visual_snapshots.py --update")
+        return 1
+
+
 def main() -> int:
     """CLI entrypoint."""
     parser = argparse.ArgumentParser(description=__doc__)
@@ -291,57 +376,20 @@ def main() -> int:
         action="store_true",
         help="Update baseline snapshot(s) in-place instead of comparing.",
     )
+    parser.add_argument(
+        "--mode",
+        action="append",
+        choices=["latex", "webpdf"],
+        help="Which export mode(s) to test. Repeatable. Defaults to both.",
+    )
     args = parser.parse_args()
 
-    with tempfile.TemporaryDirectory() as td:
-        td_path = Path(td)
-        out_pdf = td_path / "out.pdf"
-        out_png = td_path / "page-1.png"
-
-        _export_pdf(out_pdf)
-        _rasterize_page(out_pdf, out_png)
-
-        rendered = Image.open(out_png).convert("RGBA")
-        rendered = _normalize_image(rendered, pdf_path=out_pdf)
-
-        if args.update:
-            BASELINE_DIR.mkdir(parents=True, exist_ok=True)
-            rendered.save(BASELINE_PAGE_1)
-            print(f"✅ Updated baseline: {BASELINE_PAGE_1.relative_to(REPO_ROOT)}")
-            return 0
-
-        if not BASELINE_PAGE_1.exists():
-            print(f"❌ Missing baseline: {BASELINE_PAGE_1.relative_to(REPO_ROOT)}")
-            print("   Tip: run `uv run scripts/test_pdf_visual_snapshots.py --update`")
-            return 2
-
-        expected = Image.open(BASELINE_PAGE_1).convert("RGBA")
-        expected = _normalize_image(expected, pdf_path=out_pdf)
-
-        # Clean artifact dir (Python-side; avoids shell `rm -rf`).
-        if ARTIFACTS_DIR.exists():
-            shutil.rmtree(ARTIFACTS_DIR)
-        ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
-
-        actual_saved = ARTIFACTS_DIR / "actual-page-1.png"
-        diff_saved = ARTIFACTS_DIR / "diff-page-1.png"
-        rendered.save(actual_saved)
-
-        ok = _compare_images(expected, rendered, diff_saved)
-        if ok:
-            shutil.rmtree(ARTIFACTS_DIR)
-            print("✅ PDF visual snapshot matched.")
-            return 0
-
-        print("❌ PDF visual snapshot mismatch.")
-        print(f"   Baseline: {BASELINE_PAGE_1.relative_to(REPO_ROOT)}")
-        print(f"   Actual:   {actual_saved.relative_to(REPO_ROOT)}")
-        print(f"   Diff:     {diff_saved.relative_to(REPO_ROOT)}")
-        print("   Tip: if this is expected, update with:")
-        print("     uv run scripts/test_pdf_visual_snapshots.py --update")
-        return 1
+    modes = args.mode or ["latex", "webpdf"]
+    exit_code = 0
+    for mode in modes:
+        exit_code = max(exit_code, _run_mode(mode, update=args.update))
+    return exit_code
 
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
