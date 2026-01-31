@@ -649,7 +649,7 @@ pdf = [
 [package.metadata]
 requires-dist = [
     { name = "altair" },
-    { name = "marimo", specifier = "==0.19.7" },
+    { name = "marimo" },
     { name = "matplotlib" },
     { name = "nbconvert" },
     { name = "nbconvert", extras = ["webpdf"], marker = "extra == 'pdf'" },
