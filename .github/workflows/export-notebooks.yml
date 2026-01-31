@@ -43,12 +43,26 @@ jobs:
       - name: 📄 Install system dependencies (LaTeX and Pandoc)
         run: |
           sudo apt-get update
-          sudo apt-get install -y texlive-xetex texlive-fonts-recommended texlive-plain-generic pandoc
+          sudo apt-get install -y texlive-xetex texlive-fonts-recommended texlive-plain-generic pandoc poppler-utils
         continue-on-error: true
 
       - name: 📦 Install Python dependencies
         run: |
           uv sync --extra pdf
+
+      - name: 🖼️ PDF visual snapshot test
+        id: pdf_snapshot
+        run: |
+          uv run scripts/test_pdf_visual_snapshots.py
+
+      - name: 📦 Upload PDF snapshot artifacts (on failure)
+        if: failure() && steps.pdf_snapshot.outcome == 'failure'
+        uses: actions/upload-artifact@v6
+        with:
+          name: pdf-visual-snapshot-artifacts
+          path: snapshot_artifacts/
+          if-no-files-found: ignore
+          retention-days: 7
 
       - name: 📂 Setup examples
         run: |
